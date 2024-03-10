@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task1();
+        task2();
     }
 
     //задание 1
@@ -22,5 +22,20 @@ public class Main {
         double fraction =x-integerPartOfNumber;
         //круглим до 3 знаков после запятой
         return Math.floor( fraction * 1000) / 1000;
+    }
+
+    //задание 2
+    public static void task2() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.printf("результат сложения двух последних знаков числа %d." +
+                "\nРезультат : %d", x, sumLastNums(x));
+    }
+    public static int sumLastNums(int x){
+        //получим последнее число
+        int a=x%10;
+        //получим предпоследнее число
+        int b=x%100/10;
+        return a+b;
     }
 }
