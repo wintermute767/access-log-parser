@@ -1,3 +1,5 @@
+package ru.kotov.autotests;
+
 import java.util.Scanner;
 
 public class Main {
