@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task9();
+        task10();
     }
 
     //задание 1
@@ -149,5 +149,13 @@ public class Main {
             return true;
         }
         return false;
+    }
+    //задание 10
+    public static void task10() {
+        System.out.printf("Получим результат - последовательное сложение остатков от деления на 10 пяти чисел: 5, 11, 123, 14, 1." +
+                "\nРезультат : %d",lastNumSum(lastNumSum(lastNumSum(lastNumSum(5,11),123),14),1));
+    }
+    public static int lastNumSum(int a, int b){
+        return (a%10)+(b%10);
     }
 }
