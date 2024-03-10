@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task7();
+        task8();
     }
 
     //задание 1
@@ -105,6 +105,25 @@ public class Main {
             a = a ^ b ^ (b = a);
         }
         if ((num > a && num < b) || num == a || num == b) {
+            return true;
+        }
+        return false;
+    }
+
+    //задание 8
+    public static void task8() {
+        System.out.println("Введите число A и нажмите <Enter>:");
+        int a = new Scanner(System.in).nextInt();
+        System.out.println("Введите число B и нажмите <Enter>:");
+        int b = new Scanner(System.in).nextInt();
+        System.out.printf("Получим результат - ответ на вопрос: любое из принятых чисел делит другое нацело?" +
+                "\nРезультат : %b", isDivisor(a, b));
+    }
+
+    public static boolean isDivisor(int a, int b) {
+        boolean tempRemainderA = a % b == 0;
+        boolean tempRemainderB = b % a == 0;
+        if (tempRemainderA || tempRemainderB) {
             return true;
         }
         return false;
