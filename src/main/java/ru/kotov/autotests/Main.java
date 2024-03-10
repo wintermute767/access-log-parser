@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task6();
+        task7();
     }
 
     //задание 1
@@ -63,6 +63,7 @@ public class Main {
     public static boolean isPositive(int x) {
         return x >= 0;
     }
+
     //задание 5
     public static void task5() {
         System.out.println("Введите число и нажмите <Enter>:");
@@ -71,9 +72,10 @@ public class Main {
                 "\nРезультат : %b", is2Digits(x));
     }
 
-    public static boolean is2Digits(int x){
-        return x-x%100==0;
+    public static boolean is2Digits(int x) {
+        return x - x % 100 == 0;
     }
+
     //задание 6
     public static void task6() {
         System.out.println("Введите число и нажмите <Enter>:");
@@ -82,7 +84,29 @@ public class Main {
                 "\nРезультат : %b", isUpperCase(x.charAt(0)));
     }
 
-    public static boolean isUpperCase(char x){
-        return x<=90;
+    public static boolean isUpperCase(char x) {
+        return x <= 90;
+    }
+
+    //задание 7
+    public static void task7() {
+        System.out.println("Введите число A и нажмите <Enter>:");
+        int a = new Scanner(System.in).nextInt();
+        System.out.println("Введите число B и нажмите <Enter>:");
+        int b = new Scanner(System.in).nextInt();
+        System.out.println("Введите число N и нажмите <Enter>:");
+        int num = new Scanner(System.in).nextInt();
+        System.out.printf("Получим результат - ответ на вопрос: число N входит в диапазон от A до B или от В до А?" +
+                "\nРезультат : %b", isInRange(a, b, num));
+    }
+
+    public static boolean isInRange(int a, int b, int num) {
+        if (a > b) {
+            a = a ^ b ^ (b = a);
+        }
+        if ((num > a && num < b) || num == a || num == b) {
+            return true;
+        }
+        return false;
     }
 }
