@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task4();
+        task5();
     }
 
     //задание 1
@@ -62,5 +62,16 @@ public class Main {
 
     public static boolean isPositive(int x) {
         return x >= 0;
+    }
+    //задание 5
+    public static void task5() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.printf("Получим результат - ответ на вопрос: двузначное число?" +
+                "\nРезультат : %b", is2Digits(x));
+    }
+
+    public static boolean is2Digits(int x){
+        return x-x%100==0;
     }
 }
