@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task3();
+        task4();
     }
 
     //задание 1
@@ -53,5 +53,24 @@ public class Main {
             return x;
         }
         return y;
+    }
+
+    //задание 4
+    public static void task4() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.println("Введите число и нажмите <Enter>:");
+        int y = new Scanner(System.in).nextInt();
+        System.out.printf("Получим знак операции сравнения двух чисел: %d на %d" +
+                "\nРезультат : %d %s %d", x,y,x, makeDecision(x,y),y);
+    }
+
+    public static String makeDecision(int x, int y) {
+        if (((Integer)x).intValue()>((Integer)y).intValue()){
+            return ">";
+        } else if (((Integer)x).intValue()<((Integer)y).intValue()) {
+            return "<";
+        }
+        return "=";
     }
 }
