@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task8();
+        task9();
     }
 
     //задание 1
@@ -124,6 +124,28 @@ public class Main {
         boolean tempRemainderA = a % b == 0;
         boolean tempRemainderB = b % a == 0;
         if (tempRemainderA || tempRemainderB) {
+            return true;
+        }
+        return false;
+    }
+
+    //задание 9
+    public static void task9() {
+        System.out.println("Введите число A и нажмите <Enter>:");
+        int a = new Scanner(System.in).nextInt();
+        System.out.println("Введите число B и нажмите <Enter>:");
+        int b = new Scanner(System.in).nextInt();
+        System.out.println("Введите число C и нажмите <Enter>:");
+        int c = new Scanner(System.in).nextInt();
+        System.out.printf("Получим результат - ответ на вопрос: все три полученных числа равны?" +
+                "\nРезультат : %b", isEqual(a, b,c));
+    }
+
+    public static boolean isEqual (int a, int b, int c){
+        Integer tempA= a;
+        Integer tempB= b;
+        Integer tempC= c;
+        if (tempA.equals(tempB) && tempB.equals(tempC)) {
             return true;
         }
         return false;
