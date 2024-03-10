@@ -1,7 +1,6 @@
-package ru.kotov.autotests;
+package ru.сourses.geometry;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class PolyLine implements Measurable {

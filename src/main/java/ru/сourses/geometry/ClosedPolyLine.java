@@ -1,4 +1,4 @@
-package ru.kotov.autotests;
+package ru.сourses.geometry;
 
 public class ClosedPolyLine extends PolyLine{
     @Override

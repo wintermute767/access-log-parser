@@ -1,5 +1,9 @@
 package ru.kotov.autotests;
 
+import ru.сourses.math.Fraction;
+
+import static ru.сourses.math.MathOperation.sumAll;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -9,11 +13,5 @@ public class Main {
 
     }
 
-    public static double sumAll(Number[] number) {
-        float result = number[0].floatValue();
-        for (int i = 1; i < number.length; i++) {
-            result=Float.sum(result,number[i].floatValue());
-        }
-        return result;
-    }
+
 }

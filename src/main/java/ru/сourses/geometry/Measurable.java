@@ -1,6 +1,4 @@
-package ru.kotov.autotests;
-
-import java.util.List;
+package ru.сourses.geometry;
 
 public interface Measurable {
     public double getLength(CoordinatePoint[] coordinatePoints);

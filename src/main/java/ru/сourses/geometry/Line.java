@@ -1,4 +1,4 @@
-package ru.kotov.autotests;
+package ru.сourses.geometry;
 
 import java.util.Objects;
 

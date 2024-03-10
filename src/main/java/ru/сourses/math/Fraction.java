@@ -1,4 +1,4 @@
-package ru.kotov.autotests;
+package ru.сourses.math;
 
 public class Fraction extends Number {
     private final int numerator;
