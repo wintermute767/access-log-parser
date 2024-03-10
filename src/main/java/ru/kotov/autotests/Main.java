@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task2();
+        task3();
     }
 
     //задание 1
@@ -38,5 +38,20 @@ public class Main {
         }
         return x/y;
     }
+    //задание 3
+    public static void task3() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.println("Введите число и нажмите <Enter>:");
+        int y = new Scanner(System.in).nextInt();
+        System.out.printf("Получим максимальное значение из двух чисел: %d на %d" +
+                "\nРезультат : %d", x,y, max(x,y));
+    }
 
+    public static int max(int x, int y) {
+        if (((Integer)x).intValue()>((Integer)y).intValue()){
+            return x;
+        }
+        return y;
+    }
 }
