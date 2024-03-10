@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task5();
+        task6();
     }
 
     //задание 1
@@ -73,5 +73,16 @@ public class Main {
 
     public static boolean is2Digits(int x){
         return x-x%100==0;
+    }
+    //задание 6
+    public static void task6() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        String x = new Scanner(System.in).next();
+        System.out.printf("Получим результат - ответ на вопрос: эта буква большая?" +
+                "\nРезультат : %b", isUpperCase(x.charAt(0)));
+    }
+
+    public static boolean isUpperCase(char x){
+        return x<=90;
     }
 }
