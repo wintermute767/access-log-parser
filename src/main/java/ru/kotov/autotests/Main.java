@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task3();
+        task4();
     }
 
     //задание 1
@@ -49,6 +49,18 @@ public class Main {
     }
 
     public static int charToNum(char x) {
-        return (int) x;
+        return x;
+    }
+
+    //задание 4
+    public static void task4() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.printf("Получим результат - ответ на вопрос: положительное число?" +
+                "\nРезультат : %b", isPositive(x));
+    }
+
+    public static boolean isPositive(int x) {
+        return x >= 0;
     }
 }
