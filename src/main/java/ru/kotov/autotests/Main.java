@@ -63,6 +63,7 @@ public class Main {
     public static boolean isPositive(int x) {
         return x >= 0;
     }
+
     //задание 5
     public static void task5() {
         System.out.println("Введите число и нажмите <Enter>:");
@@ -71,7 +72,11 @@ public class Main {
                 "\nРезультат : %b", is2Digits(x));
     }
 
-    public static boolean is2Digits(int x){
-        return x-x%100==0;
+    public static boolean is2Digits(int x) {
+        String strNumber = String.valueOf(x);
+        if (strNumber.length() == 2) {
+            return true;
+        }
+        return false;
     }
 }
