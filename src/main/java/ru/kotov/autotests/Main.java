@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task6();
+        task7();
     }
 
     //задание 1
@@ -118,5 +118,22 @@ public class Main {
         Boolean result2 = y + z == x;
         Boolean result3 = x + z == y;
         return result1 || result2 || result3;
+    }
+
+    //задание 7
+    public static void task7() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.println("Введите число и нажмите <Enter>:");
+        int y = new Scanner(System.in).nextInt();
+        System.out.printf("Возвращает сумму чисел x и y. Однако, если сумма попадает в диапазон от [10, 19], то надо вернуть число 20: %d, %d" +
+                "\nРезультат : %d ", x, y, sum2(x, y));
+    }
+    public static int sum2(int x, int y){
+        int result = x + y;
+        if(result>=10 && result<=19){
+            return 20;
+        }
+        return result;
     }
 }
