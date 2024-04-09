@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task7();
+        task8();
     }
 
     //задание 1
@@ -129,11 +129,30 @@ public class Main {
         System.out.printf("Возвращает сумму чисел x и y. Однако, если сумма попадает в диапазон от [10, 19], то надо вернуть число 20: %d, %d" +
                 "\nРезультат : %d ", x, y, sum2(x, y));
     }
-    public static int sum2(int x, int y){
+
+    public static int sum2(int x, int y) {
         int result = x + y;
-        if(result>=10 && result<=19){
+        if (result >= 10 && result <= 19) {
             return 20;
         }
         return result;
+    }
+
+    //задание 8
+    public static void task8() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.printf("Возвращает true, если число x делится нацело на 3 или 5. " +
+                "При этом, если оно делится и на 3, и на 5, то вернуть надо false: %d" +
+                "\nРезультат : %b ", x, is35(x));
+    }
+
+    public static boolean is35(int x) {
+        boolean result1 = x % 3 == 0;
+        boolean result2 = x % 5 == 0;
+        if ((result1 || result2) && ((result1 && result2) != true)) {
+            return true;
+        }
+        return false;
     }
 }
