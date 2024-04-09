@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task5();
+        task6();
     }
 
     //задание 1
@@ -99,5 +99,24 @@ public class Main {
             maxValue = z;
         }
         return maxValue;
+    }
+
+    //задание 6
+    public static void task6() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.println("Введите число и нажмите <Enter>:");
+        int y = new Scanner(System.in).nextInt();
+        System.out.println("Введите число и нажмите <Enter>:");
+        int z = new Scanner(System.in).nextInt();
+        System.out.printf("Возвращает true, если два любых числа (из трех принятых) можно сложить так, чтобы получить третье: %d, %d, %d" +
+                "\nРезультат : %b ", x, y, z, sum3(x, y, z));
+    }
+
+    public static boolean sum3(int x, int y, int z) {
+        Boolean result1 = x + y == z;
+        Boolean result2 = y + z == x;
+        Boolean result3 = x + z == y;
+        return result1 || result2 || result3;
     }
 }
