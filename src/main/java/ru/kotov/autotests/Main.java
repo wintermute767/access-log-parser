@@ -1,5 +1,7 @@
 package ru.kotov.autotests;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -63,6 +65,7 @@ public class Main {
     public static boolean isPositive(int x) {
         return x >= 0;
     }
+
     //задание 5
     public static void task5() {
         System.out.println("Введите число и нажмите <Enter>:");
@@ -71,18 +74,28 @@ public class Main {
                 "\nРезультат : %b", is2Digits(x));
     }
 
-    public static boolean is2Digits(int x){
-        return x-x%100==0;
+    public static boolean is2Digits(int x) {
+        return x - x % 100 == 0;
     }
+
     //задание 6
     public static void task6() {
         System.out.println("Введите число и нажмите <Enter>:");
-        String x = new Scanner(System.in).next();
-        System.out.printf("Получим результат - ответ на вопрос: эта буква большая?" +
-                "\nРезультат : %b", isUpperCase(x.charAt(0)));
+        String x = new Scanner(System.in).nextLine();
+        try {
+            System.out.printf("Получим результат - ответ на вопрос: эта буква большая?" +
+                    "\nРезультат : %b", isUpperCase(x.charAt(0)));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
-    public static boolean isUpperCase(char x){
-        return x<=90;
+    public static boolean isUpperCase(char x) throws Exception {
+        String alphabetCheck = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+        if (!alphabetCheck.contains(String.valueOf(x))) {
+            throw new Exception("Вводить надо только английские буквы!!");
+        }
+        return x <= 90;
     }
 }
