@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task3();
+        task4();
     }
 
     //задание 1
@@ -62,5 +62,23 @@ public class Main {
             return result;
         }
         return "значения должны быть от 0 и выше";
+    }
+
+    //задание 4
+    public static void task4() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.println("Введите число и нажмите <Enter>:");
+        int y = new Scanner(System.in).nextInt();
+        System.out.printf("Возвращает  результат возведения %d в степень %d:" +
+                "\nРезультат : %d ", x, y, pow(x, y));
+    }
+
+    public static int pow(int x, int y) {
+        int result=1;
+        for (int i = 0; i < y; i++) {
+            result = result * x;
+        }
+        return result;
     }
 }
