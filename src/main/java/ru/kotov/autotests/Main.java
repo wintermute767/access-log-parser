@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task11();
+        task12();
     }
 
     //задание 1
@@ -194,6 +194,7 @@ public class Main {
         }
         return "лет";
     }
+
     //задание 11
     public static void task11() {
         System.out.println("Введите число и нажмите <Enter>:");
@@ -201,8 +202,9 @@ public class Main {
         System.out.printf("Возвращает  строку, которая будет обозначать текущий день недели, где 1 - это понедельник, а 7 – воскресенье." +
                 "\nРезультат: %s", day(x));
     }
-    public static String day(int x){
-        switch (x){
+
+    public static String day(int x) {
+        switch (x) {
             case (1):
                 return "понедельник";
             case (2):
@@ -221,5 +223,49 @@ public class Main {
                 break;
         }
         return "это не день недели";
+    }
+
+    //задание 12
+    public static void task12() {
+        System.out.println("Введите день и нажмите <Enter>:");
+        String x = new Scanner(System.in).nextLine();
+        System.out.println("Возвращает переданного в него дня и всех последующих до конца недели дней.\nРезультат: ");
+        printDays(x);
+    }
+
+    public static void printDays(String x) {
+        List<String> week = List.of("понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье");
+
+        switch (week.indexOf(x)) {
+            case (0):
+                lastDaysWeek(week, 0);
+                break;
+            case (1):
+                lastDaysWeek(week, 1);
+                break;
+            case (2):
+                lastDaysWeek(week, 2);
+                break;
+            case (3):
+                lastDaysWeek(week, 3);
+                break;
+            case (4):
+                lastDaysWeek(week, 4);
+                break;
+            case (5):
+                lastDaysWeek(week, 5);
+                break;
+            case (6):
+                lastDaysWeek(week, 6);
+            default:
+                System.out.println("это не день недели");
+                break;
+        }
+    }
+
+    private static void lastDaysWeek(List<String> week, int n) {
+        for (int i = n; i < week.size(); i++) {
+            System.out.println(week.get(i));
+        }
     }
 }
