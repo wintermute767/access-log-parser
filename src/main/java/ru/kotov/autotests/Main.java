@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task8();
+        task9();
     }
 
     //задание 1
@@ -151,6 +151,25 @@ public class Main {
         boolean result1 = x % 3 == 0;
         boolean result2 = x % 5 == 0;
         if ((result1 || result2) && ((result1 && result2) != true)) {
+            return true;
+        }
+        return false;
+    }
+
+    //задание 9
+    public static void task9() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.println("Введите число и нажмите <Enter>:");
+        int y = new Scanner(System.in).nextInt();
+        System.out.printf("Возвращает true, если одно из принятых методом чисел равно шести, или их сумма равна шести, или разница между ними равна шести: %d, %d" +
+                "\nРезультат : %b ", x, y, magic6(x, y));
+    }
+
+    public static boolean magic6(int x, int y) {
+        boolean result1 = (x == 6) || (y == 6);
+        boolean result2 = (x + y == 6) || (x - y == 6) || (y - x == 6);
+        if (result1 || result2) {
             return true;
         }
         return false;
