@@ -1,10 +1,11 @@
 package ru.kotov.autotests;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task9();
+        task10();
     }
 
     //задание 1
@@ -173,5 +174,24 @@ public class Main {
             return true;
         }
         return false;
+    }
+
+    //задание 10
+    public static void task10() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.printf("Возвращает строку, в которой сначала будет число х, а затем одно из слов: год, года, лет." +
+                "\nРезультат : %d %s", x, age(x));
+    }
+
+    public static String age(int x) {
+        int remainder10 = x % 10;
+        int remainder100 = x % 100;
+        if (remainder10 == 1 && remainder100 != 11) {
+            return "год";
+        } else if (List.of(2, 3, 4).contains(remainder10) && !List.of(12, 13, 14).contains(remainder100)) {
+            return "годa";
+        }
+        return "лет";
     }
 }
