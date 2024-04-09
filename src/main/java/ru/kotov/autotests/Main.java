@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task10();
+        task11();
     }
 
     //задание 1
@@ -193,5 +193,33 @@ public class Main {
             return "годa";
         }
         return "лет";
+    }
+    //задание 11
+    public static void task11() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.printf("Возвращает  строку, которая будет обозначать текущий день недели, где 1 - это понедельник, а 7 – воскресенье." +
+                "\nРезультат: %s", day(x));
+    }
+    public static String day(int x){
+        switch (x){
+            case (1):
+                return "понедельник";
+            case (2):
+                return "вторник";
+            case (3):
+                return "среда";
+            case (4):
+                return "четверг";
+            case (5):
+                return "пятница";
+            case (6):
+                return "суббота";
+            case (7):
+                return "воскресенье";
+            default:
+                break;
+        }
+        return "Нет такого дня в неделе. Выберите число от 1 до 7!";
     }
 }
