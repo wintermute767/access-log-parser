@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task1();
+        task2();
     }
 
     //задание 1
@@ -19,6 +19,25 @@ public class Main {
         if (x >= 0) {
             String result = "";
             for (int i = 0; i <= x; i++) {
+                result = result + " " + i;
+            }
+            return result;
+        }
+        return "значения должны быть от 0 и выше";
+    }
+
+    //задание 2
+    public static void task2() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.printf("Выводит строку, в которой будут записаны все числа от %d до 0 (включительно)" +
+                "\nРезультат: %s", x, reverseListNums(x));
+    }
+
+    public static String reverseListNums(int x) {
+        if (x >= 0) {
+            String result = "";
+            for (int i = x; i >= 0; i--) {
                 result = result + " " + i;
             }
             return result;
