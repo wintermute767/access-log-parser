@@ -220,6 +220,6 @@ public class Main {
             default:
                 break;
         }
-        return "Нет такого дня в неделе. Выберите число от 1 до 7!";
+        return "это не день недели";
     }
 }
