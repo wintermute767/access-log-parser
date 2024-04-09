@@ -56,11 +56,18 @@ public class Main {
     public static void task4() {
         System.out.println("Введите число и нажмите <Enter>:");
         int x = new Scanner(System.in).nextInt();
-        System.out.printf("Получим результат - ответ на вопрос: положительное число?" +
-                "\nРезультат : %b", isPositive(x));
+        try {
+            System.out.printf("Получим результат - ответ на вопрос: положительное число?" +
+                    "\nРезультат : %b", isPositive(x));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public static boolean isPositive(int x) {
-        return x >= 0;
+    public static boolean isPositive(int x) throws Exception {
+        if (x == 0) {
+            throw new Exception("Нельзя указывать ноль, так как он не отрицательный или положительный, а в сигнатуре метода это не предусмотренно!");
+        }
+        return x > 0;
     }
 }
