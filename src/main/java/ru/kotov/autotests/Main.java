@@ -125,16 +125,13 @@ public class Main {
         return positiveIndex;
     }
 
-    public static void main(String[] args) {
-        System.out.println("результат: " + Arrays.toString(add(new int[]{1, 2, 3, 4, 5}, 9, 3)));
-    }
 
     //задание 11
     public static int[] add(int[] arr, int x, int pos) {
         if (pos <= arr.length - 1) {
             List<Integer> resultList = new ArrayList<>();
             for (int i = 0; i < arr.length; i++) {
-                if (i==pos) {
+                if (i == pos) {
                     resultList.add(x);
                 }
                 resultList.add(arr[i]);
@@ -150,4 +147,30 @@ public class Main {
         }
     }
 
+    public static void main(String[] args) {
+        System.out.println("результат: " + Arrays.toString(add(new int[]{1, 2, 3, 4, 5}, new int[]{7, 8, 9}, 3)));
+    }
+
+    //задание 12
+    public static int[] add(int[] arr, int[] ins, int pos) {
+        if (pos <= arr.length - 1) {
+            List<Integer> resultList = new ArrayList<>();
+            for (int i = 0; i < arr.length; i++) {
+                if (i == pos) {
+                    for (int k = 0; k < ins.length; k++) {
+                        resultList.add(ins[k]);
+                    }
+                }
+                resultList.add(arr[i]);
+            }
+            int[] resultArray = new int[resultList.size()];
+
+            for (int i = 0; i < resultList.size(); i++) {
+                resultArray[i] = resultList.get(i);
+            }
+            return resultArray;
+        } else {
+            return null;
+        }
+    }
 }
