@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        task9();
+        task8();
     }
 
     //задание 1
@@ -160,7 +160,7 @@ public class Main {
     public static void rightTriangle(int x) {
         List<String> resultTriangle = new ArrayList<>();
         for (int i = 1; i <= x; i++) {
-            resultTriangle.add(" ".repeat(x - i) + "*".repeat(i));
+            resultTriangle.add("*".repeat(i)+ " ".repeat(x - i));
         }
         System.out.printf("Результат:\n%s", String.join("\n", resultTriangle));
     }
