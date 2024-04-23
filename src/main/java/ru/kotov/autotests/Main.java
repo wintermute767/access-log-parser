@@ -71,8 +71,9 @@ public class Main {
         }
         System.out.println("arr=" + Arrays.toString(arr));
     }
+
     //задание 7
-    public static int[] reverseBack(int[] arr){
+    public static int[] reverseBack(int[] arr) {
         for (int i = 0; i < arr.length / 2; i++) {
             int temp = arr[i];
             arr[i] = arr[arr.length - 1 - i];
@@ -82,7 +83,7 @@ public class Main {
     }
 
     //задание 8
-    public static int[] concat(int[] arr1, int[] arr2){
+    public static int[] concat(int[] arr1, int[] arr2) {
         int aLen = arr1.length;
         int bLen = arr2.length;
         int[] result = new int[aLen + bLen];
@@ -93,10 +94,10 @@ public class Main {
     }
 
     //задание 9
-    public static int[] findAll(int[] arr, int x){
-        List<Integer> indexesList= new ArrayList<>();
+    public static int[] findAll(int[] arr, int x) {
+        List<Integer> indexesList = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
-            if(arr[i]==x){
+            if (arr[i] == x) {
                 indexesList.add(i);
             }
         }
@@ -107,15 +108,12 @@ public class Main {
         }
         return findIndex;
     }
-    public static void main(String[] args) {
-        System.out.println("результат: "+Arrays.toString(deleteNegative(new int[]{1,2,-3,4,-2,2,-5})));
 
-    }
     //задание 10
-    public static int[] deleteNegative(int[] arr){
-        List<Integer> positiveList= new ArrayList<>();
+    public static int[] deleteNegative(int[] arr) {
+        List<Integer> positiveList = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
-            if(arr[i]>0){
+            if (arr[i] > 0) {
                 positiveList.add(arr[i]);
             }
         }
@@ -126,4 +124,30 @@ public class Main {
         }
         return positiveIndex;
     }
+
+    public static void main(String[] args) {
+        System.out.println("результат: " + Arrays.toString(add(new int[]{1, 2, 3, 4, 5}, 9, 3)));
+    }
+
+    //задание 11
+    public static int[] add(int[] arr, int x, int pos) {
+        if (pos <= arr.length - 1) {
+            List<Integer> resultList = new ArrayList<>();
+            for (int i = 0; i < arr.length; i++) {
+                if (i==pos) {
+                    resultList.add(x);
+                }
+                resultList.add(arr[i]);
+            }
+            int[] resultArray = new int[resultList.size()];
+
+            for (int i = 0; i < resultList.size(); i++) {
+                resultArray[i] = resultList.get(i);
+            }
+            return resultArray;
+        } else {
+            return null;
+        }
+    }
+
 }
