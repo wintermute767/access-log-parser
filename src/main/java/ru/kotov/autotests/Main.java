@@ -91,10 +91,7 @@ public class Main {
         System.arraycopy(arr2, 0, result, aLen, bLen);
         return result;
     }
-    public static void main(String[] args) {
-        System.out.println("результат: "+Arrays.toString(findAll(new int[]{1,2,3,8,2,2,9},2)));
 
-    }
     //задание 9
     public static int[] findAll(int[] arr, int x){
         List<Integer> indexesList= new ArrayList<>();
@@ -109,5 +106,24 @@ public class Main {
             findIndex[i] = indexesList.get(i);
         }
         return findIndex;
+    }
+    public static void main(String[] args) {
+        System.out.println("результат: "+Arrays.toString(deleteNegative(new int[]{1,2,-3,4,-2,2,-5})));
+
+    }
+    //задание 10
+    public static int[] deleteNegative(int[] arr){
+        List<Integer> positiveList= new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i]>0){
+                positiveList.add(arr[i]);
+            }
+        }
+        int[] positiveIndex = new int[positiveList.size()];
+
+        for (int i = 0; i < positiveList.size(); i++) {
+            positiveIndex[i] = positiveList.get(i);
+        }
+        return positiveIndex;
     }
 }
