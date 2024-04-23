@@ -61,11 +61,6 @@ public class Main {
         return true;
     }
 
-    public static void main(String[] args) {
-        System.out.println("результат: ");
-        reverse(new int[]{1, 2, 3, 4, 5});
-
-    }
     //задание 6
     public static void reverse(int[] arr) {
         for (int i = 0; i < arr.length / 2; i++) {
@@ -74,5 +69,18 @@ public class Main {
             arr[arr.length - 1 - i] = temp;
         }
         System.out.println("arr=" + Arrays.toString(arr));
+    }
+    public static void main(String[] args) {
+        System.out.println("результат: "+Arrays.toString(reverseBack(new int[]{1, 2, 3, 4, 5})));
+
+    }
+    //задание 7
+    public static int[] reverseBack(int[] arr){
+        for (int i = 0; i < arr.length / 2; i++) {
+            int temp = arr[i];
+            arr[i] = arr[arr.length - 1 - i];
+            arr[arr.length - 1 - i] = temp;
+        }
+        return arr.clone();
     }
 }
