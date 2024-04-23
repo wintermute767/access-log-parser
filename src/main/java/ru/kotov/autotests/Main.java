@@ -1,12 +1,10 @@
 package ru.kotov.autotests;
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        task7();
+        task8();
     }
 
     //задание 1
@@ -131,7 +129,7 @@ public class Main {
         return false;
     }
 
-    //задание 6
+    //задание 7
     public static void task7() {
         System.out.println("Введите число и нажмите <Enter>:");
         int x = new Scanner(System.in).nextInt();
@@ -149,5 +147,21 @@ public class Main {
             resultSquare = resultSquare + "\n" + resultString;
         }
         System.out.printf("Результат:\n%s", resultSquare);
+    }
+
+    //задание 8
+    public static void task8() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.println("Выводит на экран треугольник из символов ‘*’");
+        rightTriangle(x);
+    }
+
+    public static void rightTriangle(int x) {
+        List<String> resultTriangle = new ArrayList<>();
+        for (int i = 1; i <= x; i++) {
+            resultTriangle.add(" ".repeat(x - i) + "*".repeat(i));
+        }
+        System.out.printf("Результат:\n%s", String.join("\n", resultTriangle));
     }
 }
