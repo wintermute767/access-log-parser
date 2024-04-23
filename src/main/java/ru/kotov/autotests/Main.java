@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        task8();
+        task9();
     }
 
     //задание 1
@@ -163,5 +163,29 @@ public class Main {
             resultTriangle.add(" ".repeat(x - i) + "*".repeat(i));
         }
         System.out.printf("Результат:\n%s", String.join("\n", resultTriangle));
+    }
+
+    //задание 9
+    public static void task9() {
+        guessGame();
+    }
+
+    public static void guessGame() {
+        int randomNum = 3;
+        java.util.Scanner sc = new java.util.Scanner(System.in);
+        System.out.println("What number am I thinking (0 to 9)? :");
+        int i =0;
+        while (true){
+            int x = sc.nextInt();
+            i++;
+            if (x != randomNum) {
+                System.out.println("No, try again");
+            } else {
+                System.out.println("Yes, it`s " + randomNum);
+                System.out.println("Attempts " + i);
+                break;
+            }
+        }
+
     }
 }
