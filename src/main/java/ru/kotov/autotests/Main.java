@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task4();
+        task5();
     }
 
     //задание 1
@@ -75,10 +75,38 @@ public class Main {
     }
 
     public static int pow(int x, int y) {
-        int result=1;
+        int result = 1;
         for (int i = 0; i < y; i++) {
             result = result * x;
         }
         return result;
     }
+
+    //задание 5
+    public static void task5() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        long x = new Scanner(System.in).nextLong();
+        try {
+            System.out.printf("Выводит количество знаков в числе x" +
+                    "\nРезультат: %s", numLen(x));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static int numLen(long x) throws Exception {
+        if (x > 0) {
+            int i = 0;
+            while (x > 0) {
+                x = Math.round(x / 10);
+                i++;
+            }
+            return i;
+        } else if (x == 0) {
+            return 1;
+        } else {
+            throw new Exception("x должно быть от 0 и выше");
+        }
+    }
+
 }
