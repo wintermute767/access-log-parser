@@ -1,10 +1,12 @@
 package ru.kotov.autotests;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        task5();
+        task6();
     }
 
     //задание 1
@@ -109,4 +111,23 @@ public class Main {
         }
     }
 
+    //задание 6
+    public static void task6() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.printf("Выводит возвращал true, если все знаки числа одинаковы" +
+                "\nРезультат: %s", equalNum(x));
+    }
+
+    public static boolean equalNum(int x) {
+        Set numbers = new HashSet();
+        while (x > 0) {
+            numbers.add(x%10);
+            x = x / 10;
+        }
+        if (numbers.size()==1){
+            return true;
+        }
+        return false;
+    }
 }
