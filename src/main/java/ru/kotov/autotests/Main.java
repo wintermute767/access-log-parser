@@ -70,10 +70,6 @@ public class Main {
         }
         System.out.println("arr=" + Arrays.toString(arr));
     }
-    public static void main(String[] args) {
-        System.out.println("результат: "+Arrays.toString(reverseBack(new int[]{1, 2, 3, 4, 5})));
-
-    }
     //задание 7
     public static int[] reverseBack(int[] arr){
         for (int i = 0; i < arr.length / 2; i++) {
@@ -82,5 +78,19 @@ public class Main {
             arr[arr.length - 1 - i] = temp;
         }
         return arr.clone();
+    }
+    public static void main(String[] args) {
+        System.out.println("результат: "+Arrays.toString(concat(new int[]{1,2,3},new int[]{7,8,9})));
+
+    }
+    //задание 8
+    public static int[] concat(int[] arr1, int[] arr2){
+        int aLen = arr1.length;
+        int bLen = arr2.length;
+        int[] result = new int[aLen + bLen];
+
+        System.arraycopy(arr1, 0, result, 0, aLen);
+        System.arraycopy(arr2, 0, result, aLen, bLen);
+        return result;
     }
 }
