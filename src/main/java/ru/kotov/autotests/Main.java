@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        task6();
+        task7();
     }
 
     //задание 1
@@ -122,12 +122,32 @@ public class Main {
     public static boolean equalNum(int x) {
         Set numbers = new HashSet();
         while (x > 0) {
-            numbers.add(x%10);
+            numbers.add(x % 10);
             x = x / 10;
         }
-        if (numbers.size()==1){
+        if (numbers.size() == 1) {
             return true;
         }
         return false;
+    }
+
+    //задание 6
+    public static void task7() {
+        System.out.println("Введите число и нажмите <Enter>:");
+        int x = new Scanner(System.in).nextInt();
+        System.out.printf("Выводит на экран квадрат из символов ‘*’");
+        square(x);
+    }
+
+    public static void square(int x) {
+        String resultString = "";
+        for (int i = 0; i < x; i++) {
+            resultString = resultString + "*";
+        }
+        String resultSquare = "";
+        for (int k = 0; k < x; k++) {
+            resultSquare = resultSquare + "\n" + resultString;
+        }
+        System.out.printf("Результат:\n%s", resultSquare);
     }
 }
