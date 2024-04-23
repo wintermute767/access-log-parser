@@ -3,6 +3,7 @@ package ru.kotov.autotests;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -79,10 +80,7 @@ public class Main {
         }
         return arr.clone();
     }
-    public static void main(String[] args) {
-        System.out.println("результат: "+Arrays.toString(concat(new int[]{1,2,3},new int[]{7,8,9})));
 
-    }
     //задание 8
     public static int[] concat(int[] arr1, int[] arr2){
         int aLen = arr1.length;
@@ -92,5 +90,24 @@ public class Main {
         System.arraycopy(arr1, 0, result, 0, aLen);
         System.arraycopy(arr2, 0, result, aLen, bLen);
         return result;
+    }
+    public static void main(String[] args) {
+        System.out.println("результат: "+Arrays.toString(findAll(new int[]{1,2,3,8,2,2,9},2)));
+
+    }
+    //задание 9
+    public static int[] findAll(int[] arr, int x){
+        List<Integer> indexesList= new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i]==x){
+                indexesList.add(i);
+            }
+        }
+        int[] findIndex = new int[indexesList.size()];
+
+        for (int i = 0; i < indexesList.size(); i++) {
+            findIndex[i] = indexesList.get(i);
+        }
+        return findIndex;
     }
 }
