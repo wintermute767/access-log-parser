@@ -3,6 +3,7 @@ package ru.kotov.autotests;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,20 +49,30 @@ public class Main {
         return positive;
     }
 
-    public static void main(String[] args) {
-        System.out.println("результат: " + palindrom(new int[]{1, -2, -7, 4, 2, 2, 5}));
-        System.out.println("результат: " + palindrom(new int[]{1, -2, -7, 4, -7, -2, 1}));
-
-    }
 
     //задание 5
     public static boolean palindrom(int[] arr) {
-        Integer arrHalf= arr.length/2;
+        Integer arrHalf = arr.length / 2;
         for (int i = 0; i < arrHalf; i++) {
-            if (arr[i] != arr[arr.length-1-i]) {
+            if (arr[i] != arr[arr.length - 1 - i]) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("результат: ");
+        reverse(new int[]{1, 2, 3, 4, 5});
+
+    }
+    //задание 6
+    public static void reverse(int[] arr) {
+        for (int i = 0; i < arr.length / 2; i++) {
+            int temp = arr[i];
+            arr[i] = arr[arr.length - 1 - i];
+            arr[arr.length - 1 - i] = temp;
+        }
+        System.out.println("arr=" + Arrays.toString(arr));
     }
 }
