@@ -15,10 +15,7 @@ public class CoordinatePoint {
 
     @Override
     public String toString() {
-        return "CoordinatePoint{" +
-                "coordinateX=" + coordinateX +
-                ", coordinateY=" + coordinateY +
-                '}';
+        return "{" + + coordinateX + ";" + coordinateY + "}";
     }
 
     @Override
@@ -31,5 +28,24 @@ public class CoordinatePoint {
     @Override
     public int hashCode() {
         return Objects.hash(coordinateX, coordinateY);
+    }
+
+    public int getCoordinateX() {
+        return coordinateX;
+    }
+
+    public int getCoordinateY() {
+        return coordinateY;
+    }
+    public void setNewCoordinate(int coordinateX,int coordinateY) {
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
+    }
+    public void setCoordinateX(int coordinateX) {
+        this.coordinateX = coordinateX;
+    }
+
+    public void setCoordinateY(int coordinateY) {
+        this.coordinateY = coordinateY;
     }
 }
