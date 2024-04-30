@@ -1,9 +1,14 @@
 package ru.сourses.main;
 
-import static ru.сourses.math.MathOperation.stringToPower;
+import java.awt.*;
+
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Возведение в степень: "+ stringToPower(args[0],args[1]));
+        Point pointFromAwt = new Point(1, 3);
+        ru.сourses.geometry.Point pointFromGeometryPoint = new ru.сourses.geometry.Point(3, 4);
+
+        System.out.println(pointFromAwt);
+        System.out.println(pointFromGeometryPoint);
     }
 }
