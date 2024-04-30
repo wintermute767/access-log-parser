@@ -1,6 +1,6 @@
 package ru.сourses.geometry;
 
-public class ClosedPolyLine extends PolyLine{
+public class ClosedCustomPolyLine extends CustomPolyLine {
     @Override
     public CustomLine[] getLines(CoordinatePoint[] coordinatePoints) {
         int length = coordinatePoints.length;
