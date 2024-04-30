@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import static java.lang.Math.sqrt;
 
-public class Line {
+public class Line implements Measurable {
     private CoordinatePoint startCoordinatePoint;
     private CoordinatePoint endCoordinatePoint;
 
@@ -18,9 +18,12 @@ public class Line {
         this.endCoordinatePoint = new CoordinatePoint(endCoordinateX, endCoordinateY);
     }
 
-    public double getLength(){
-        return sqrt((endCoordinatePoint.getCoordinateX() - startCoordinatePoint.getCoordinateX())*(endCoordinatePoint.getCoordinateX() - startCoordinatePoint.getCoordinateX())+(endCoordinatePoint.getCoordinateY() - startCoordinatePoint.getCoordinateY())*(endCoordinatePoint.getCoordinateY() - startCoordinatePoint.getCoordinateY()));
+    @Override
+    public double getLength(CoordinatePoint[] coordinatePoints) {
+        return sqrt((coordinatePoints[0].getCoordinateX() - coordinatePoints[1].getCoordinateX()) * (coordinatePoints[0].getCoordinateX() - coordinatePoints[1].getCoordinateX())
+                + (coordinatePoints[0].getCoordinateY() - coordinatePoints[1].getCoordinateY()) * (coordinatePoints[0].getCoordinateY() - coordinatePoints[1].getCoordinateY()));
     }
+
     public CoordinatePoint getStartCoordinatePoint() {
         return startCoordinatePoint;
     }
