@@ -1,59 +1,24 @@
 package ru.сourses.geometry;
 
-import java.util.Objects;
+public class Line implements Cloneable {
+    Point start, end;
 
-import static java.lang.Math.sqrt;
-
-public class Line implements Measurable {
-    private CoordinatePoint startCoordinatePoint;
-    private CoordinatePoint endCoordinatePoint;
-
-    public Line(CoordinatePoint startCoordinatePoint, CoordinatePoint endCoordinatePoint) {
-        this.startCoordinatePoint = startCoordinatePoint;
-        this.endCoordinatePoint = endCoordinatePoint;
-    }
-
-    public Line(int startCoordinateX, int startCoordinateY, int endCoordinateX, int endCoordinateY) {
-        this.startCoordinatePoint = new CoordinatePoint(startCoordinateX, startCoordinateY);
-        this.endCoordinatePoint = new CoordinatePoint(endCoordinateX, endCoordinateY);
+    public Line(Point start, Point end) {
+        this.start = start;
+        this.end = end;
     }
 
     @Override
-    public double getLength(CoordinatePoint[] coordinatePoints) {
-        return sqrt((coordinatePoints[0].getCoordinateX() - coordinatePoints[1].getCoordinateX()) * (coordinatePoints[0].getCoordinateX() - coordinatePoints[1].getCoordinateX())
-                + (coordinatePoints[0].getCoordinateY() - coordinatePoints[1].getCoordinateY()) * (coordinatePoints[0].getCoordinateY() - coordinatePoints[1].getCoordinateY()));
-    }
-
-    public CoordinatePoint getStartCoordinatePoint() {
-        return startCoordinatePoint;
-    }
-
-    public CoordinatePoint getEndCoordinatePoint() {
-        return endCoordinatePoint;
-    }
-
-    public void setStartCoordinatePoint(CoordinatePoint startCoordinatePoint) {
-        this.startCoordinatePoint = startCoordinatePoint;
-    }
-
-    public void setEndCoordinatePoint(CoordinatePoint endCoordinatePoint) {
-        this.endCoordinatePoint = endCoordinatePoint;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Line line)) return false;
+        return start.equals(line.start) && end.equals(line.end);
     }
 
     @Override
-    public String toString() {
-        return "Линия от " + startCoordinatePoint.toString() + " до " + endCoordinatePoint.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Line line)) return false;
-        return Objects.equals(getStartCoordinatePoint(), line.getStartCoordinatePoint()) && Objects.equals(getEndCoordinatePoint(), line.getEndCoordinatePoint());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getStartCoordinatePoint(), getEndCoordinatePoint());
+    public Line clone() {
+        Point newStart = this.start.clone();
+        Point newEnd = this.end.clone();
+        return new Line(newStart, newEnd);
     }
 }

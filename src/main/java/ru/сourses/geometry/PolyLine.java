@@ -21,25 +21,25 @@ public class PolyLine implements Measurable {
                 .collect(Collectors.joining(" ,")) + "]";
     }
 
-    public Line[] getLines(CoordinatePoint[] coordinatePoints) {
+    public CustomLine[] getLines(CoordinatePoint[] coordinatePoints) {
         if (coordinatePoints.length != 0 || coordinatePoints.length != 1) {
-            Line[] result = new Line[coordinatePoints.length - 1];
+            CustomLine[] result = new CustomLine[coordinatePoints.length - 1];
             for (int i = 0; i < coordinatePoints.length - 1; i++) {
-                result[i] = new Line(coordinatePoints[i], coordinatePoints[i + 1]);
+                result[i] = new CustomLine(coordinatePoints[i], coordinatePoints[i + 1]);
             }
             return result;
         } else {
-            return new Line[]{};
+            return new CustomLine[]{};
         }
     }
 
     @Override
     public double getLength(CoordinatePoint[] coordinatePoints) {
-        Line[] lines = this.getLines(coordinatePoints);
+        CustomLine[] customLines = this.getLines(coordinatePoints);
         double result = 0;
-        if (lines.length != 0) {
-            for (Line line : lines) {
-                result = result + line.getLength(new CoordinatePoint[]{line.getStartCoordinatePoint(), line.getEndCoordinatePoint()});
+        if (customLines.length != 0) {
+            for (CustomLine customLine : customLines) {
+                result = result + customLine.getLength(new CoordinatePoint[]{customLine.getStartCoordinatePoint(), customLine.getEndCoordinatePoint()});
             }
         }
         return result;

@@ -2,7 +2,7 @@ package ru.сourses.geometry;
 
 import java.util.Objects;
 
-public class Point {
+public class Point implements Cloneable {
     int x, y;
 
     public Point(int x, int y) {
