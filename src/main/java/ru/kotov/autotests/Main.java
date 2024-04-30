@@ -2,13 +2,18 @@ package ru.kotov.autotests;
 
 public class Main {
     public static void main(String[] args) {
-        Fraction fraction1 = new Fraction(-30, 15);
-        Fraction fraction2 = new Fraction(28, 7);
-        Fraction fraction3 = new Fraction(7, 2);
-        System.out.println("int 1: "+fraction1.intValue()+", int 2: "+fraction2.intValue()+", int 3: "+fraction3.intValue());
-        System.out.println("long 1: "+fraction1.longValue()+", long 2: "+fraction2.longValue()+", long 3: "+fraction3.longValue());
-        System.out.println("double 1: "+fraction1.doubleValue()+", double 2: "+fraction2.doubleValue()+", double 3: "+fraction3.doubleValue());
-        System.out.println("float 1: "+fraction1.floatValue()+", float 2: "+fraction2.floatValue()+", float 3: "+fraction3.floatValue());
+
+        System.out.println(sumAll(new Number[]{Integer.valueOf(2),new Fraction(3,5),Double.valueOf(2.3)}));
+        System.out.println(sumAll(new Number[]{Double.valueOf(3.6),new Fraction(49,12),Integer.valueOf(3),new Fraction(3,2)}));
+        System.out.println(sumAll(new Number[]{new Fraction(1,3),Integer.valueOf(1)}));
+
     }
 
+    public static double sumAll(Number[] number) {
+        float result = number[0].floatValue();
+        for (int i = 1; i < number.length; i++) {
+            result=Float.sum(result,number[i].floatValue());
+        }
+        return result;
+    }
 }

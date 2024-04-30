@@ -1,6 +1,6 @@
 package ru.kotov.autotests;
 
-public class Fraction extends Number{
+public class Fraction extends Number {
     private final int numerator;
     private final int denominator;
 
@@ -12,9 +12,9 @@ public class Fraction extends Number{
         this.denominator = denominator;
     }
 
-    public Fraction sum(Fraction b) {
-        int newDenominator = this.nok(denominator, b.denominator);
-        int newNumerator = numerator * (newDenominator / denominator) + b.numerator * (newDenominator / b.denominator);
+    public Fraction sum(Fraction a, Fraction b) {
+        int newDenominator = this.nok(a.denominator, b.denominator);
+        int newNumerator = a.numerator * (newDenominator / a.denominator) + b.numerator * (newDenominator / b.denominator);
         return new Fraction(newNumerator, newDenominator);
     }
 
@@ -55,21 +55,21 @@ public class Fraction extends Number{
 
     @Override
     public int intValue() {
-        return numerator/denominator;
+        return numerator / denominator;
     }
 
     @Override
     public long longValue() {
-        return (long) numerator/denominator;
+        return (long) numerator / denominator;
     }
 
     @Override
     public float floatValue() {
-        return (float) numerator /denominator;
+        return (float) numerator / denominator;
     }
 
     @Override
     public double doubleValue() {
-        return (double) numerator /denominator;
+        return (double) numerator / denominator;
     }
 }
