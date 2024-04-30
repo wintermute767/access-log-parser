@@ -1,4 +1,4 @@
-package ru.kotov.autotests;
+package ru.сourses.main;
 
 import ru.сourses.math.Fraction;
 

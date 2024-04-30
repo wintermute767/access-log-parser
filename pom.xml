@@ -52,7 +52,7 @@
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                                 <addClasspath>true</addClasspath>
-                                <mainClass>ru.kotov.autotests.Main</mainClass>
+                                <mainClass>ru.сourses.main.Main</mainClass>
                             </manifest>
                         </archive>
                     </configuration>
