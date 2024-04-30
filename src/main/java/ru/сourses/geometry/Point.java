@@ -22,7 +22,7 @@ public class Point {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Point point)) return false;
-        return (x == point.x && y == point.y) || (x == point.y && y == point.x);
+        return x == point.x && y == point.y;
     }
 
     @Override
