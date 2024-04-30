@@ -56,4 +56,8 @@ public class PolyLine {
             System.out.println("Изменения не прошло - позиция точки не совпадает с длиной массива");
         }
     }
+
+    public CoordinatePoint[] getArrayCoordinatePoint() {
+        return arrayCoordinatePoint;
+    }
 }

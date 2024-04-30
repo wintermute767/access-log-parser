@@ -1,10 +1,25 @@
 package ru.kotov.autotests;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class Main {
     public static void main(String[] args) {
-        Point a = new Point(3,4);
-        Point3D a3d= new Point3D(3,4,5);
-        System.out.println(a);
-        System.out.println(a3d);
+        PolyLine polyLine = new PolyLine();
+        polyLine.setArrayCoordinatePoint(new CoordinatePoint[]{
+                new CoordinatePoint(1, 5),
+                new CoordinatePoint(2, 8),
+                new CoordinatePoint(5, 3),
+                new CoordinatePoint(8, 9)});
+        ClosedPolyLine closedPolyLine = new ClosedPolyLine();
+        closedPolyLine.setArrayCoordinatePoint(new CoordinatePoint[]{
+                new CoordinatePoint(1, 5),
+                new CoordinatePoint(2, 8),
+                new CoordinatePoint(5, 3),
+                new CoordinatePoint(8, 9)});
+        System.out.println("PolyLine: "+ Arrays.stream(polyLine.getLines()).map(line -> line.toString()).collect(Collectors.toList()));
+        System.out.println("Длина polyLine: "+ polyLine.getLength());
+        System.out.println("ClosedPolyLine: "+ Arrays.stream(closedPolyLine.getLines()).map(line -> line.toString()).collect(Collectors.toList()));
+        System.out.println("Длина closedPolyLine: "+ closedPolyLine.getLength());
     }
 }
