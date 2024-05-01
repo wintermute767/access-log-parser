@@ -52,8 +52,9 @@
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                                 <addClasspath>true</addClasspath>
-                                <mainClass>ru.сourses.main.Main</mainClass>
+                                <mainClass>ru.сourses.main.Sum</mainClass>
                             </manifest>
+
                         </archive>
                     </configuration>
                 </plugin>
