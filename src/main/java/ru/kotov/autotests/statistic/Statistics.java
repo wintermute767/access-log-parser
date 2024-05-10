@@ -6,6 +6,7 @@ import ru.kotov.autotests.log.components.LogEntry;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class Statistics {
     private Map<String, Integer> browserStatistic = new HashMap<>();
     private int countLog = 0;
     private List<String> listOfBotsToDisplay = List.of("YandexBot/3.0", "Googlebot/2.1");
+    private HashSet<String> uniquePage = new HashSet<>();
 
     public Statistics() {
     }
@@ -31,6 +33,34 @@ public class Statistics {
         setBotStatistic(logEntry);
         setOperationSystemStatistic(logEntry);
         setBrowserStatistic(logEntry);
+        setUniquePage(logEntry);
+    }
+
+    public HashMap<String, Double> getOperationSystemStatisticRatioToOne() {
+        HashMap<String, Double> result = new HashMap<String, Double>();
+        int countAllOperationSystemStatistic = operationSystemStatistic
+                .values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        operationSystemStatistic.keySet()
+                .stream()
+                .forEach(string -> {
+                    double exactValue = (double) operationSystemStatistic.get(string) / countAllOperationSystemStatistic;
+                    double roundedValue = Math.round(exactValue * 100.0) / 100.0;
+                    result.put(string, roundedValue);
+                });
+        return result;
+    }
+
+    private void setUniquePage(LogEntry logEntry) {
+        if (logEntry.getCodeResponse() == 200) {
+            this.uniquePage.add(logEntry.getUrl());
+        }
+    }
+
+    public String getUniquePageAsString() {
+        return String.join("\n", uniquePage);
     }
 
     private void setTotalTraffic(LogEntry logEntry) {
@@ -62,7 +92,7 @@ public class Statistics {
     }
 
     public int getHouseBetweenMinAndMaxTimeInStatistic() {
-        return Math.toIntExact(ChronoUnit.HOURS.between(maxTime,minTime));
+        return Math.toIntExact(ChronoUnit.HOURS.between(maxTime, minTime));
     }
 
     public void setBotStatistic(LogEntry logEntry) {
@@ -72,6 +102,7 @@ public class Statistics {
             this.botStatistic.computeIfPresent(botName, (Sting, integer) -> integer + 1);
         }
     }
+
     public void setOperationSystemStatistic(LogEntry logEntry) {
         if (logEntry.getUserAgent() != null) {
             String operatingSystem = logEntry.getUserAgent().getOperatingSystem();
@@ -79,6 +110,7 @@ public class Statistics {
             this.operationSystemStatistic.computeIfPresent(operatingSystem, (Sting, integer) -> integer + 1);
         }
     }
+
     public void setBrowserStatistic(LogEntry logEntry) {
         if (logEntry.getUserAgent() != null) {
             String browser = logEntry.getUserAgent().getBrowser();
@@ -111,8 +143,9 @@ public class Statistics {
                             "Самое ранне время в лог файле: %s\n" +
                             "Самое позднее время в лог файле: %s\n" +
                             "Количество часов между самое ранним и самым позднем временем: %d\n" +
-                            "Среднее значение трафика за час: %d\n"+
-                            "Статистика по операционным системам: %s\n"+
+                            "Среднее значение трафика за час: %d\n" +
+                            "Статистика по операционным системам с абсолютными значениями: %s\n" +
+                            "Статистика по операционным системам с относительными значениями: %s\n" +
                             "Статистика по браузерам: %s\n",
                     countLog,
                     botStatisticString,
@@ -122,6 +155,7 @@ public class Statistics {
                     getHouseBetweenMinAndMaxTimeInStatistic(),
                     getTrafficRate(),
                     operationSystemStatistic.toString(),
+                    getOperationSystemStatisticRatioToOne().toString(),
                     browserStatistic.toString());
         } else {
             return String.format("Общее количество запросов: 0");
