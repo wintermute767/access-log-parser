@@ -3,12 +3,10 @@ package ru.kotov.autotests.statistic;
 import lombok.Getter;
 import ru.kotov.autotests.log.components.LogEntry;
 
+import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -23,6 +21,9 @@ public class Statistics {
     private List<String> listOfBotsToDisplay = List.of("YandexBot/3.0", "Googlebot/2.1");
     private HashSet<String> uniquePage = new HashSet<>();
     private HashSet<String> uniquePageNotExist = new HashSet<>();
+    private int countUserVisits = 0;
+    private int countErrorRequest = 0;
+    private HashSet<InetAddress> setUniqueIPAddress = new HashSet<>();
 
     public Statistics() {
     }
@@ -36,7 +37,42 @@ public class Statistics {
         setBrowserStatistic(logEntry);
         setUniquePage(logEntry);
         setUniquePageNotExist(logEntry);
+        setCountUserVisits(logEntry);
+        setCountCountErrorRequest(logEntry);
+        setCountUniqueIPAddress(logEntry);
     }
+
+    private int getAverageNumberRequestsPerUser() {
+        return getAverageNumberUserVisits() / setUniqueIPAddress.size();
+    }
+
+    private void setCountUniqueIPAddress(LogEntry logEntry) {
+        if (logEntry.getUserAgent().getFullString().contains("bot")) setUniqueIPAddress.add(logEntry.getIpAddress());
+    }
+
+    private void setCountCountErrorRequest(LogEntry logEntry) {
+        Integer codeResponse = logEntry.getCodeResponse();
+        if (codeResponse >= 400 && codeResponse < 600) countErrorRequest++;
+    }
+
+    private int getAverageErrorRequest() {
+        Integer hours = getHouseBetweenMinAndMaxTimeInStatistic();
+        if (minTime != null || maxTime != null || hours != 0) {
+            return countErrorRequest / hours;
+        } else return 0;
+    }
+
+    private int getAverageNumberUserVisits() {
+        Integer hours = getHouseBetweenMinAndMaxTimeInStatistic();
+        if (minTime != null || maxTime != null || hours != 0) {
+            return countUserVisits / hours;
+        } else return 0;
+    }
+
+    private void setCountUserVisits(LogEntry logEntry) {
+        if (logEntry.getUserAgent().getFullString().contains("bot")) countUserVisits++;
+    }
+
     public HashMap<String, Double> getBrowserStatisticRatioToOne() {
         HashMap<String, Double> result = new HashMap<String, Double>();
         int countAllBrowserStatistic = browserStatistic
@@ -53,6 +89,7 @@ public class Statistics {
                 });
         return result;
     }
+
     public HashMap<String, Double> getOperationSystemStatisticRatioToOne() {
         HashMap<String, Double> result = new HashMap<String, Double>();
         int countAllOperationSystemStatistic = operationSystemStatistic
@@ -75,14 +112,17 @@ public class Statistics {
             this.uniquePage.add(logEntry.getUrl());
         }
     }
+
     private void setUniquePageNotExist(LogEntry logEntry) {
         if (logEntry.getCodeResponse() == 404) {
             this.uniquePageNotExist.add(logEntry.getUrl());
         }
     }
+
     public String getUniquePageNotExistAsString() {
         return String.join("\n", uniquePageNotExist);
     }
+
     public String getUniquePageAsString() {
         return String.join("\n", uniquePage);
     }
@@ -93,30 +133,35 @@ public class Statistics {
 
     private void setMinAndMaxTime(LogEntry logEntry) {
 
-        LocalDateTime localDateTime = logEntry.getDateAndTime().toLocalDateTime();
+        LocalDateTime localDateTime = getLocalDateTime(logEntry);
         if (minTime == null) {
             this.minTime = localDateTime;
-        } else if (minTime.isBefore(localDateTime)) {
+        } else if (minTime.isAfter(localDateTime)) {
             this.minTime = localDateTime;
         }
         if (maxTime == null) {
             this.maxTime = localDateTime;
-        } else if (maxTime.isAfter(localDateTime)) {
+        } else if (maxTime.isBefore(localDateTime)) {
             this.maxTime = localDateTime;
         }
 
     }
 
+    private static LocalDateTime getLocalDateTime(LogEntry logEntry) {
+        LocalDateTime localDateTime = logEntry.getDateAndTime().toLocalDateTime();
+        return localDateTime;
+    }
+
     public long getTrafficRate() {
         if (minTime != null || maxTime != null || totalTraffic != 0) {
-            Long hours = Long.valueOf(getHouseBetweenMinAndMaxTimeInStatistic());
+            Integer hours = getHouseBetweenMinAndMaxTimeInStatistic();
             return totalTraffic / hours;
         }
         return 0;
     }
 
     public int getHouseBetweenMinAndMaxTimeInStatistic() {
-        return Math.toIntExact(ChronoUnit.HOURS.between(maxTime, minTime));
+        return Math.toIntExact(ChronoUnit.HOURS.between(minTime, maxTime));
     }
 
     public void setBotStatistic(LogEntry logEntry) {
@@ -170,8 +215,11 @@ public class Statistics {
                             "Среднее значение трафика за час: %d\n" +
                             "Статистика по операционным системам с абсолютными значениями: %s\n" +
                             "Статистика по операционным системам с относительными значениями: %s\n" +
-                            "Статистика по браузерам с абсолютными значениями: %s\n"+
-                            "Статистика по браузерам с относительными значениями: %s\n",
+                            "Статистика по браузерам с абсолютными значениями: %s\n" +
+                            "Статистика по браузерам с относительными значениями: %s\n" +
+                            "Среднее количество запросов от пользователей: %d\n" +
+                            "Среднее количество запросов с ошибками: %d\n" +
+                            "Средней посещаемости одним пользователем: %d",
                     countLog,
                     botStatisticString,
                     totalTraffic,
@@ -182,7 +230,10 @@ public class Statistics {
                     operationSystemStatistic.toString(),
                     getOperationSystemStatisticRatioToOne().toString(),
                     browserStatistic.toString(),
-                    getBrowserStatisticRatioToOne());
+                    getBrowserStatisticRatioToOne(),
+                    getAverageNumberUserVisits(),
+                    getAverageErrorRequest(),
+                    getAverageNumberRequestsPerUser());
         } else {
             return String.format("Общее количество запросов: 0");
         }
