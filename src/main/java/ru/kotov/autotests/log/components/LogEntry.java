@@ -2,6 +2,7 @@ package ru.kotov.autotests.log.components;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import ru.kotov.autotests.customExeption.CustomParcerLogException;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -25,10 +26,10 @@ public class LogEntry {
     private final String refer;
     private final UserAgent userAgent;
 
-    public LogEntry(String fullStringLog) {
+    public LogEntry(String fullStringLog) throws CustomParcerLogException {
         this.fullStringLog = fullStringLog;
 
-        String mainRegex = "^(.{10,15})\\s(.*)\\s(.*)\\s\\[(.*)\\]\\s\\\"(.{3,7})\\s(.*)\\s(.*)\\\"\\s(\\d{3})\\s(\\d{1,})\\s\\\"(.*)\\\"\\s\\\"(.*)\\\"$";
+        String mainRegex = "^(.{7,15})\\s(.*)\\s(.*)\\s\\[(.*)\\]\\s\\\"(.{3,7})\\s(.*)\\s(.*)\\\"\\s(\\d{3})\\s(\\d{1,})\\s\\\"(.*)\\\"\\s\\\"(.*)\\\"$";
         Pattern pattern = Pattern.compile(mainRegex);
         Matcher result = pattern.matcher(fullStringLog);
         if (result.find()) {
@@ -42,19 +43,11 @@ public class LogEntry {
             this.refer = result.group(10);
             this.userAgent = new UserAgent(result.group(11));
         } else {
-            ipAddress=null;
-            dateAndTime=null;
-            requestMethod=null;
-            url=null;
-            HTTPProtocol=null;
-            codeResponse=null;
-            byteResponse=null;
-            refer=null;
-            userAgent=null;
+            throw new CustomParcerLogException(String.format(
+                    "Невозможно обработать строку из-за неправильного формата\sСтрока: %s", fullStringLog));
         }
 
     }
-
 
 
     private InetAddress getIpAddressFromLog(String stringIpAddress) {

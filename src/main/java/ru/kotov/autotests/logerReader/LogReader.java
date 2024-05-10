@@ -1,5 +1,7 @@
 package ru.kotov.autotests.logerReader;
 
+import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.kotov.autotests.customExeption.CustomParcerLogException;
 import ru.kotov.autotests.log.components.LogEntry;
@@ -10,38 +12,48 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.kotov.autotests.statistic.LogStatistic;
+import ru.kotov.autotests.statistic.Statistics;
 
 @Slf4j
+@Getter
 public class LogReader {
+    private List<LogEntry> logEntries = new ArrayList<>();
+    private Statistics logStatistic = new Statistics();
 
-    public static void readLogFile(String path) {
-        log.info("Начинаю читать лог файл");
-        int countSting = 0;
-        List<LogEntry> logEntries = new ArrayList<>();
+    public LogReader() {
+    }
 
+    public void readLogFile(String path) {
+        log.info("Начинаю читать лог файл. Ждите!");
         try {
             FileReader fileReader = new FileReader(path);
-            BufferedReader reader =
-                    new BufferedReader(fileReader);
+            BufferedReader reader = new BufferedReader(fileReader);
             String line;
             while ((line = reader.readLine()) != null) {
                 int length = line.length();
-                countSting++;
+
                 if (length > 1024) {
-                    throw new CustomParcerLogException(String.format("Maximum line length of 1024 characters exceeded. String number %d, string lenght %d", countSting, length));
+                    throw new CustomParcerLogException(String.format(
+                            "Максимальная длина строки превышает 1024 символа. " +
+                                    "Строка номер %d, длина строки %d\n" +
+                                    "Строка с ошибкой %s",
+                            logStatistic.getCountLog() + 1, length, line));
                 }
                 if (line != null) {
-                    LogEntry logEntry = new LogEntry(line);
-                    logEntries.add(logEntry);
+                    try{
+                        LogEntry logEntry = new LogEntry(line);
+                        this.logEntries.add(logEntry);
+                        this.logStatistic.addEntry(logEntry);
+                    }catch (CustomParcerLogException e){
+                        log.error("Чтение строки закончилось с ошибкой: {}",e.getMessage());
+                    }
+
                 }
             }
         } catch (Exception ex) {
             log.warn(ex.getMessage());
         }
-        log.info("Прочитано строк в файле: {}", countSting);
-        log.info(LogStatistic.getBotStatistic(logEntries, List.of("YandexBot/3.0", "Googlebot/2.1")));
-
+        log.info("Файл лога обработан");
     }
 
     public static boolean checksPathToFileLog(String path) {
