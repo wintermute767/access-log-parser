@@ -22,6 +22,7 @@ public class Statistics {
     private int countLog = 0;
     private List<String> listOfBotsToDisplay = List.of("YandexBot/3.0", "Googlebot/2.1");
     private HashSet<String> uniquePage = new HashSet<>();
+    private HashSet<String> uniquePageNotExist = new HashSet<>();
 
     public Statistics() {
     }
@@ -34,8 +35,24 @@ public class Statistics {
         setOperationSystemStatistic(logEntry);
         setBrowserStatistic(logEntry);
         setUniquePage(logEntry);
+        setUniquePageNotExist(logEntry);
     }
-
+    public HashMap<String, Double> getBrowserStatisticRatioToOne() {
+        HashMap<String, Double> result = new HashMap<String, Double>();
+        int countAllBrowserStatistic = browserStatistic
+                .values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        browserStatistic.keySet()
+                .stream()
+                .forEach(string -> {
+                    double exactValue = (double) browserStatistic.get(string) / countAllBrowserStatistic;
+                    double roundedValue = Math.round(exactValue * 1000.0) / 1000.0;
+                    result.put(string, roundedValue);
+                });
+        return result;
+    }
     public HashMap<String, Double> getOperationSystemStatisticRatioToOne() {
         HashMap<String, Double> result = new HashMap<String, Double>();
         int countAllOperationSystemStatistic = operationSystemStatistic
@@ -47,7 +64,7 @@ public class Statistics {
                 .stream()
                 .forEach(string -> {
                     double exactValue = (double) operationSystemStatistic.get(string) / countAllOperationSystemStatistic;
-                    double roundedValue = Math.round(exactValue * 100.0) / 100.0;
+                    double roundedValue = Math.round(exactValue * 1000.0) / 1000.0;
                     result.put(string, roundedValue);
                 });
         return result;
@@ -58,7 +75,14 @@ public class Statistics {
             this.uniquePage.add(logEntry.getUrl());
         }
     }
-
+    private void setUniquePageNotExist(LogEntry logEntry) {
+        if (logEntry.getCodeResponse() == 404) {
+            this.uniquePageNotExist.add(logEntry.getUrl());
+        }
+    }
+    public String getUniquePageNotExistAsString() {
+        return String.join("\n", uniquePageNotExist);
+    }
     public String getUniquePageAsString() {
         return String.join("\n", uniquePage);
     }
@@ -146,7 +170,8 @@ public class Statistics {
                             "Среднее значение трафика за час: %d\n" +
                             "Статистика по операционным системам с абсолютными значениями: %s\n" +
                             "Статистика по операционным системам с относительными значениями: %s\n" +
-                            "Статистика по браузерам: %s\n",
+                            "Статистика по браузерам с абсолютными значениями: %s\n"+
+                            "Статистика по браузерам с относительными значениями: %s\n",
                     countLog,
                     botStatisticString,
                     totalTraffic,
@@ -156,7 +181,8 @@ public class Statistics {
                     getTrafficRate(),
                     operationSystemStatistic.toString(),
                     getOperationSystemStatisticRatioToOne().toString(),
-                    browserStatistic.toString());
+                    browserStatistic.toString(),
+                    getBrowserStatisticRatioToOne());
         } else {
             return String.format("Общее количество запросов: 0");
         }

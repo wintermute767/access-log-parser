@@ -24,7 +24,8 @@ public class Main {
             LogReader logReader = new LogReader();
             logReader.readLogFile(path);
             log.info(logReader.getLogStatistic().toString());
-            log.info(logReader.getLogStatistic().getUniquePageAsString());
+//            log.info(logReader.getLogStatistic().getUniquePageAsString());
+//            log.info(logReader.getLogStatistic().getUniquePageNotExistAsString());
         }
     }
 
