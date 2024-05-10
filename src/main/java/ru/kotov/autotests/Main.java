@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static ru.kotov.autotests.logerReader.LogReader.checksPathToFileLog;
 
@@ -14,20 +16,22 @@ import static ru.kotov.autotests.logerReader.LogReader.checksPathToFileLog;
 @Slf4j
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Integer> listForTest = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
-        int[] arrayForTest = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
-        reverse(listForTest);
-        reverse(arrayForTest);
-        System.out.println("Сортировка листа: " + listForTest);
-        System.out.println("Сортировка массива: " + Arrays.toString(arrayForTest));
+        ArrayList<String> listForTest = new ArrayList<>(Arrays.asList("Порядок", "слов", "в", "строке", "должен", "быть", "равен", "порядку", "слов", "в", "потоке."));
+        Stream<String> streamForTest = listForTest.stream();
+        System.out.println("Слова в стриме: " + listForTest);
+        System.out.println("Слова после обработки: " + getStringFromStream(streamForTest));
 
+    }
+
+    public static String getStringFromStream(Stream<String> stringStream) {
+        return stringStream.collect(Collectors.joining(" "));
     }
 
     public static void reverse(ArrayList<Integer> intList) {
         int n = intList.size() - 1;
         for (int i = 0; i < intList.size() / 2; i++) {
             int temp = intList.get(i);
-            intList.set(i, intList.get(n-i));
+            intList.set(i, intList.get(n - i));
             intList.set(n - i, temp);
         }
     }
