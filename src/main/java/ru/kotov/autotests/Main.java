@@ -17,10 +17,11 @@ import static ru.kotov.autotests.logerReader.LogReader.checksPathToFileLog;
 public class Main {
     public static void main(String[] args) {
         ArrayList<String> listForTest = new ArrayList<>(Arrays.asList("Порядок", "слов", "в", "строке", "должен", "быть", "равен", "порядку", "слов", "в", "потоке."));
-        Stream<String> streamForTest = listForTest.stream();
-        System.out.println("Слова в стриме: " + listForTest);
-        System.out.println("Слова после обработки: " + getStringFromStream(streamForTest));
+        printList(listForTest);
+    }
 
+    public static void printList(ArrayList list) {
+        list.stream().forEach(System.out::println);
     }
 
     public static String getStringFromStream(Stream<String> stringStream) {
