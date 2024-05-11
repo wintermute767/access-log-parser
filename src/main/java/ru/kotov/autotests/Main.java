@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        task3();
+        task6();
     }
 
     //задание 1
@@ -50,17 +50,27 @@ public class Main {
 
     public static int charToNum(char x) {
         int intX = (int) x;
-        switch (intX){
-            case 48: return 0;
-            case 49: return 1;
-            case 50: return 2;
-            case 51: return 3;
-            case 52: return 4;
-            case 53: return 5;
-            case 54: return 6;
-            case 55: return 7;
-            case 56: return 8;
-            case 57: return 9;
+        switch (intX) {
+            case 48:
+                return 0;
+            case 49:
+                return 1;
+            case 50:
+                return 2;
+            case 51:
+                return 3;
+            case 52:
+                return 4;
+            case 53:
+                return 5;
+            case 54:
+                return 6;
+            case 55:
+                return 7;
+            case 56:
+                return 8;
+            case 57:
+                return 9;
         }
         return -1;
 
@@ -93,13 +103,17 @@ public class Main {
     //задание 6
     public static void task6() {
         System.out.println("Введите число и нажмите <Enter>:");
-        String x = new Scanner(System.in).next();
+//        String x = new Scanner(System.in).next();
+        String x = "a";
         System.out.printf("Получим результат - ответ на вопрос: эта буква большая?" +
                 "\nРезультат : %b", isUpperCase(x.charAt(0)));
     }
 
     public static boolean isUpperCase(char x) {
-        return x <= 90;
+        if (!(x >= 65 && x <= 90) && !(x >= 97 && x <= 122)) {
+            throw new IllegalArgumentException("Это не буква латинского алфавита");
+        }
+        return x >= 65 && x <= 90;
     }
 
     //задание 7
@@ -152,24 +166,26 @@ public class Main {
         System.out.println("Введите число C и нажмите <Enter>:");
         int c = new Scanner(System.in).nextInt();
         System.out.printf("Получим результат - ответ на вопрос: все три полученных числа равны?" +
-                "\nРезультат : %b", isEqual(a, b,c));
+                "\nРезультат : %b", isEqual(a, b, c));
     }
 
-    public static boolean isEqual (int a, int b, int c){
-        Integer tempA= a;
-        Integer tempB= b;
-        Integer tempC= c;
+    public static boolean isEqual(int a, int b, int c) {
+        Integer tempA = a;
+        Integer tempB = b;
+        Integer tempC = c;
         if (tempA.equals(tempB) && tempB.equals(tempC)) {
             return true;
         }
         return false;
     }
+
     //задание 10
     public static void task10() {
         System.out.printf("Получим результат - последовательное сложение остатков от деления на 10 пяти чисел: 5, 11, 123, 14, 1." +
-                "\nРезультат : %d",lastNumSum(lastNumSum(lastNumSum(lastNumSum(5,11),123),14),1));
+                "\nРезультат : %d", lastNumSum(lastNumSum(lastNumSum(lastNumSum(5, 11), 123), 14), 1));
     }
-    public static int lastNumSum(int a, int b){
-        return (a%10)+(b%10);
+
+    public static int lastNumSum(int a, int b) {
+        return (a % 10) + (b % 10);
     }
 }
