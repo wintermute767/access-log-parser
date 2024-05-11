@@ -19,9 +19,14 @@ public class Line implements Measurable {
     }
 
     @Override
-    public double getLength(CoordinatePoint[] coordinatePoints) {
-        return sqrt((coordinatePoints[0].getCoordinateX() - coordinatePoints[1].getCoordinateX()) * (coordinatePoints[0].getCoordinateX() - coordinatePoints[1].getCoordinateX())
-                + (coordinatePoints[0].getCoordinateY() - coordinatePoints[1].getCoordinateY()) * (coordinatePoints[0].getCoordinateY() - coordinatePoints[1].getCoordinateY()));
+    public Line[] getLines() {
+        return new Line[]{this};
+    }
+
+    @Override
+    public double getLength() {
+        return sqrt((startCoordinatePoint.getCoordinateX() - endCoordinatePoint.getCoordinateX()) * (startCoordinatePoint.getCoordinateX() - endCoordinatePoint.getCoordinateX())
+                + (startCoordinatePoint.getCoordinateY() - endCoordinatePoint.getCoordinateY()) * (startCoordinatePoint.getCoordinateY() - endCoordinatePoint.getCoordinateY()));
     }
 
     public CoordinatePoint getStartCoordinatePoint() {

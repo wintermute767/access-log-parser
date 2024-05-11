@@ -17,7 +17,7 @@ public class Main {
                 new CoordinatePoint(2, 8),
                 new CoordinatePoint(5, 3),
                 new CoordinatePoint(8, 9)});
-        System.out.println("Длина polyLine: "+ polyLine.getLength(polyLine.getArrayCoordinatePoint()));
-        System.out.println("Длина closedPolyLine: "+ closedPolyLine.getLength(closedPolyLine.getArrayCoordinatePoint()));
+        System.out.println("Длина polyLine: "+ polyLine.getLength());
+        System.out.println("Длина closedPolyLine: "+ closedPolyLine.getLength());
     }
 }

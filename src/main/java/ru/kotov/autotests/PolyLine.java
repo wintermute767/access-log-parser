@@ -21,12 +21,12 @@ public class PolyLine implements Measurable {
                 .map(coordinatePoint -> coordinatePoint.toString())
                 .collect(Collectors.joining(" ,")) + "]";
     }
-
-    public Line[] getLines(CoordinatePoint[] coordinatePoints) {
-        if (coordinatePoints.length != 0 || coordinatePoints.length != 1) {
-            Line[] result = new Line[coordinatePoints.length - 1];
-            for (int i = 0; i < coordinatePoints.length - 1; i++) {
-                result[i] = new Line(coordinatePoints[i], coordinatePoints[i + 1]);
+    @Override
+    public Line[] getLines() {
+        if (arrayCoordinatePoint.length != 0 || arrayCoordinatePoint.length != 1) {
+            Line[] result = new Line[arrayCoordinatePoint.length - 1];
+            for (int i = 0; i < arrayCoordinatePoint.length - 1; i++) {
+                result[i] = new Line(arrayCoordinatePoint[i], arrayCoordinatePoint[i + 1]);
             }
             return result;
         } else {
@@ -35,12 +35,12 @@ public class PolyLine implements Measurable {
     }
 
     @Override
-    public double getLength(CoordinatePoint[] coordinatePoints) {
-        Line[] lines = this.getLines(coordinatePoints);
+    public double getLength() {
+        Line[] lines = this.getLines();
         double result = 0;
         if (lines.length != 0) {
             for (Line line : lines) {
-                result = result + line.getLength(new CoordinatePoint[]{line.getStartCoordinatePoint(), line.getEndCoordinatePoint()});
+                result = result + line.getLength(/*new CoordinatePoint[]{line.getStartCoordinatePoint(), line.getEndCoordinatePoint()}*/);
             }
         }
         return result;
