@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Getter
@@ -23,8 +25,10 @@ public class Statistics {
     private HashSet<String> uniquePageNotExist = new HashSet<>();
     private int countUserVisits = 0;
     private int countErrorRequest = 0;
-    private HashSet<InetAddress> setUniqueIPAddressOnlyUser = new HashSet<>();
-    private HashSet<InetAddress> setUniqueIPAddress = new HashSet<>();
+    private Map<InetAddress, Integer> uniqueIPAddressOnlyUser = new HashMap<>();
+    private HashSet<InetAddress> uniqueIPAddress = new HashSet<>();
+    private HashMap<Integer, Integer> requestInOneSecond = new HashMap<>();
+    private HashSet<String> refersOnLog = new HashSet<>();
 
     public Statistics() {
     }
@@ -40,21 +44,75 @@ public class Statistics {
         setUniquePageNotExist(logEntry);
         setCountUserVisits(logEntry);
         setCountCountErrorRequest(logEntry);
-        setCountUniqueIPAddressOnlyUser(logEntry);
-        setCountUniqueIPAddress(logEntry);
+        setUniqueIPAddressOnlyUser(logEntry);
+        setUniqueIPAddress(logEntry);
+        setRequestInOneSecond(logEntry);
+        setreferOnLog(logEntry);
+    }
+
+    public Map.Entry<InetAddress, Integer> getMaxUniqueIPAddressOnlyUser() {
+        return Collections.max(uniqueIPAddressOnlyUser.entrySet(), new Comparator<Map.Entry<InetAddress, Integer>>() {
+            public int compare(Map.Entry<InetAddress, Integer> e1, Map.Entry<InetAddress, Integer> e2) {
+                return e1.getValue().compareTo(e2.getValue());
+            }
+        });
+    }
+
+    public HashSet<String> getDomainNameFromRefers() {
+        String mainRegex = "http.*?\\:\\/\\/(.+?)\\/";
+        Pattern pattern = Pattern.compile(mainRegex);
+        HashSet<String> DomainNameFromRefers = new HashSet<>();
+        refersOnLog.stream()
+                .forEach(string -> {
+                    Matcher result = pattern.matcher(string);
+                    if (result.find()) {
+                        DomainNameFromRefers.add(result.group(1));
+                    } else DomainNameFromRefers.add(string);
+                });
+        return DomainNameFromRefers;
+    }
+
+    private void setreferOnLog(LogEntry logEntry) {
+        String refer = logEntry.getRefer();
+        if (refer != null) {
+            if (!refer.equals("-")) {
+                refersOnLog.add(refer);
+            }
+        }
+    }
+
+    private void setRequestInOneSecond(LogEntry logEntry) {
+        if (!logEntry.getUserAgent().getThisIsBotLog()) {
+            int secondLocalDateTime = getLocalDateTime(logEntry).getSecond();
+            this.requestInOneSecond.computeIfAbsent(secondLocalDateTime, integer -> 0);
+            this.requestInOneSecond.computeIfPresent(secondLocalDateTime, (integer1, integer2) -> integer2 + 1);
+        }
+    }
+
+    public Map.Entry<Integer, Integer> getMaxRequestInSecond() {
+        return Collections.max(requestInOneSecond.entrySet(), new Comparator<Map.Entry<Integer, Integer>>() {
+            public int compare(Map.Entry<Integer, Integer> e1, Map.Entry<Integer, Integer> e2) {
+                return e1.getValue().compareTo(e2.getValue());
+            }
+        });
     }
 
     private int getAverageNumberRequestsPerUser() {
-        if(setUniqueIPAddressOnlyUser.size()!=0){
-            return getAverageNumberUserVisits() / setUniqueIPAddressOnlyUser.size();
-        }else return 0;
+        if (uniqueIPAddressOnlyUser.size() != 0) {
+            return getAverageNumberUserVisits() / uniqueIPAddressOnlyUser.size();
+        } else return 0;
     }
 
-    private void setCountUniqueIPAddressOnlyUser(LogEntry logEntry) {
-        if (!logEntry.getUserAgent().isBot()) setUniqueIPAddressOnlyUser.add(logEntry.getIpAddress());
+    private void setUniqueIPAddressOnlyUser(LogEntry logEntry) {
+        if (!logEntry.getUserAgent().getThisIsBotLog()) {
+            InetAddress ipAddress = logEntry.getIpAddress();
+            this.uniqueIPAddressOnlyUser.computeIfAbsent(ipAddress, integer -> 0);
+            this.uniqueIPAddressOnlyUser.computeIfPresent(ipAddress, (integer1, integer2) -> integer2 + 1);
+        }
     }
-    private void setCountUniqueIPAddress(LogEntry logEntry) {
-        setUniqueIPAddress.add(logEntry.getIpAddress());
+
+    private void setUniqueIPAddress(LogEntry logEntry) {
+        uniqueIPAddress.add(logEntry.getIpAddress());
     }
 
     private void setCountCountErrorRequest(LogEntry logEntry) {
@@ -77,7 +135,7 @@ public class Statistics {
     }
 
     private void setCountUserVisits(LogEntry logEntry) {
-        if (!logEntry.getUserAgent().isBot()) {
+        if (!logEntry.getUserAgent().getThisIsBotLog()) {
             countUserVisits++;
         }
     }
@@ -228,7 +286,9 @@ public class Statistics {
                             "Статистика по браузерам с относительными значениями: %s\n" +
                             "Среднее количество запросов за час от пользователей: %d\n" +
                             "Среднее количество запросов за час с ошибками: %d\n" +
-                            "Средней посещаемости за час одним пользователем: %d",
+                            "Средней посещаемости за час одним пользователем: %d\n" +
+                            "Максимальное значение запросов в одну из 60 секунд: %s\n" +
+                            "Максимальной посещаемости одним пользователем с уникальным IP адресом: %s",
                     countLog,
                     botStatisticString,
                     totalTraffic,
@@ -242,7 +302,9 @@ public class Statistics {
                     getBrowserStatisticRatioToOne(),
                     getAverageNumberUserVisits(),
                     getAverageErrorRequest(),
-                    getAverageNumberRequestsPerUser());
+                    getAverageNumberRequestsPerUser(),
+                    getMaxRequestInSecond().toString(),
+                    getMaxUniqueIPAddressOnlyUser().toString());
         } else {
             return String.format("Общее количество запросов: 0");
         }

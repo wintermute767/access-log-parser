@@ -26,6 +26,7 @@ public class Main {
             log.info(logReader.getLogStatistic().toString());
 //            log.info(logReader.getLogStatistic().getUniquePageAsString());
 //            log.info(logReader.getLogStatistic().getUniquePageNotExistAsString());
+//            log.info(logReader.getLogStatistic().getUniqueIPAddressOnlyUser().toString());
         }
     }
 

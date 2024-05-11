@@ -1,6 +1,7 @@
 package ru.kotov.autotests.log.components;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.regex.Matcher;
@@ -15,15 +16,16 @@ public class UserAgent {
     private final String browser;
     private final String operatingSystem;
     private final String botName;
+    private final Boolean thisIsBotLog;
 
     public UserAgent(String fullString) {
         this.fullString = fullString;
         this.botName = getBotName(fullString);
         this.browser = getBrowserName(fullString);
         this.operatingSystem = getOperatingSystem(fullString);
-
+        this.thisIsBotLog=isBot();
     }
-    public boolean isBot() {
+    private boolean isBot() {
         return this.getFullString().contains("bot");
     }
     private String getBotName(String fullString) {
