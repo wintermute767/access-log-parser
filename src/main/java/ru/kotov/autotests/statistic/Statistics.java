@@ -23,6 +23,7 @@ public class Statistics {
     private HashSet<String> uniquePageNotExist = new HashSet<>();
     private int countUserVisits = 0;
     private int countErrorRequest = 0;
+    private HashSet<InetAddress> setUniqueIPAddressOnlyUser = new HashSet<>();
     private HashSet<InetAddress> setUniqueIPAddress = new HashSet<>();
 
     public Statistics() {
@@ -39,15 +40,21 @@ public class Statistics {
         setUniquePageNotExist(logEntry);
         setCountUserVisits(logEntry);
         setCountCountErrorRequest(logEntry);
+        setCountUniqueIPAddressOnlyUser(logEntry);
         setCountUniqueIPAddress(logEntry);
     }
 
     private int getAverageNumberRequestsPerUser() {
-        return getAverageNumberUserVisits() / setUniqueIPAddress.size();
+        if(setUniqueIPAddressOnlyUser.size()!=0){
+            return getAverageNumberUserVisits() / setUniqueIPAddressOnlyUser.size();
+        }else return 0;
     }
 
+    private void setCountUniqueIPAddressOnlyUser(LogEntry logEntry) {
+        if (!logEntry.getUserAgent().isBot()) setUniqueIPAddressOnlyUser.add(logEntry.getIpAddress());
+    }
     private void setCountUniqueIPAddress(LogEntry logEntry) {
-        if (logEntry.getUserAgent().getFullString().contains("bot")) setUniqueIPAddress.add(logEntry.getIpAddress());
+        setUniqueIPAddress.add(logEntry.getIpAddress());
     }
 
     private void setCountCountErrorRequest(LogEntry logEntry) {
@@ -70,7 +77,9 @@ public class Statistics {
     }
 
     private void setCountUserVisits(LogEntry logEntry) {
-        if (logEntry.getUserAgent().getFullString().contains("bot")) countUserVisits++;
+        if (!logEntry.getUserAgent().isBot()) {
+            countUserVisits++;
+        }
     }
 
     public HashMap<String, Double> getBrowserStatisticRatioToOne() {
@@ -217,9 +226,9 @@ public class Statistics {
                             "Статистика по операционным системам с относительными значениями: %s\n" +
                             "Статистика по браузерам с абсолютными значениями: %s\n" +
                             "Статистика по браузерам с относительными значениями: %s\n" +
-                            "Среднее количество запросов от пользователей: %d\n" +
-                            "Среднее количество запросов с ошибками: %d\n" +
-                            "Средней посещаемости одним пользователем: %d",
+                            "Среднее количество запросов за час от пользователей: %d\n" +
+                            "Среднее количество запросов за час с ошибками: %d\n" +
+                            "Средней посещаемости за час одним пользователем: %d",
                     countLog,
                     botStatisticString,
                     totalTraffic,

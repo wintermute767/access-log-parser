@@ -23,7 +23,9 @@ public class UserAgent {
         this.operatingSystem = getOperatingSystem(fullString);
 
     }
-
+    public boolean isBot() {
+        return this.getFullString().contains("bot");
+    }
     private String getBotName(String fullString) {
         Matcher matcher = Pattern
                 .compile("\\s\\(compatible\\;\\s+?(.+?)\\;")
