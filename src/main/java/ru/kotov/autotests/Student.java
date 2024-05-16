@@ -9,41 +9,75 @@ import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-@ToString
-@EqualsAndHashCode
-public class Student {
-    @Setter
-    private StudentRepository repo;
-    @Getter
-    @Setter
-    private String name;
-    private List grades = new ArrayList<>();
 
-    public Student(String name) {
+public class Student {
+    Integer id;
+    String name;
+    List<Integer> marks = new ArrayList();
+
+    public Student() {
+    }
+
+    public Student(Integer id, String name, Integer... marks) {
+        this.id = id;
+        this.name = name;
+        this.marks.addAll(Arrays.asList(marks));
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    public List getGrades() {
-        return new ArrayList<>(grades);
+    public List<Integer> getMarks() {
+        return this.marks;
     }
 
-    @SneakyThrows
-    public void addGrade(int grade) {
-        if (!repo.checkGrade(grade)) {
-            throw new IllegalArgumentException(grade + " is wrong grade");
+    public double average() {
+        return this.marks.stream().mapToInt((x) -> {
+            return x;
+        }).average().orElse(-1.0);
+    }
+
+    public void setMarks(List<Integer> marks) {
+        this.marks = marks;
+    }
+
+    public String toString() {
+        return "Student{id=" + this.id + ", name=" + this.name + ", marks=" + this.marks + '}';
+    }
+
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null) {
+            return false;
+        } else if (this.getClass() != obj.getClass()) {
+            return false;
+        } else {
+            Student other = (Student)obj;
+            return Objects.equals(this.id, other.id);
         }
-        grades.add(grade);
-    }
-
-
-    @SneakyThrows
-    public int raiting() {
-        return repo.getRaintingForGradeSum(
-                grades.stream()
-                        .mapToInt(x -> (int) x)
-                        .sum());
     }
 }
