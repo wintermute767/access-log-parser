@@ -13,7 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 @Slf4j
-public class WebDriverTests {
+public class PikabuTests {
     WebDriver driver;
 
     @Before
