@@ -1,5 +1,6 @@
 package ru.kotov.autotests;
 
+import lombok.SneakyThrows;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,6 +41,20 @@ public class PobedaTests {
 
         Assert.assertTrue(mainPagePobeda.getInformationAboutCompanyElement().isDisplayed());
         Assert.assertEquals(mainPagePobeda.getInformationAboutCompanyElement().getText(), "О компании");
+    }
+
+    @Test
+    public void test2() {
+        Assert.assertTrue(mainPagePobeda.getCityFromElement().isDisplayed());
+        Assert.assertTrue(mainPagePobeda.getCityWhereElement().isDisplayed());
+        Assert.assertTrue(mainPagePobeda.getDateOfDepartureThereElement().isDisplayed());
+        Assert.assertTrue(mainPagePobeda.getReturnFlightDateElement().isDisplayed());
+    }
+    @Test
+    @SneakyThrows
+    public void test3() {
+        mainPagePobeda.setSiteFromAndWhere("Москва","Санкт-Петербург");
+        Assert.assertEquals(mainPagePobeda.getDateOfDepartureThereElement().getAttribute("data-errored"), "true");
     }
 
 
