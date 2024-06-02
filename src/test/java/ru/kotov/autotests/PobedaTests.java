@@ -1,23 +1,22 @@
 package ru.kotov.autotests;
 
-import org.junit.After;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.junit.jupiter.api.Order;
 import ru.kotov.autotests.pobeda.*;
 
 import java.time.Duration;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
+import static ru.kotov.autotests.testUtils.Utils.checkInputElement;
+import static ru.kotov.autotests.testUtils.Utils.checkWithTextElement;
 
 public class PobedaTests {
-    WebDriver driver;
-    JavascriptExecutor jsExecutor;
     MainPagePobeda mainPagePobeda;
     MainPagePobedaInfo mainPagePobedaInfo;
     MainPagePobedaTiketSearch mainPagePobedaTiketSearch;
@@ -27,89 +26,86 @@ public class PobedaTests {
     @Before
     public void before() {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
-        this.driver = new ChromeDriver();
-        this.driver.get("https://www.pobeda.aero/");
-        this.driver.manage().deleteAllCookies();
-        this.jsExecutor = (JavascriptExecutor) this.driver;
-        this.mainPagePobeda = new MainPagePobeda(this.driver);
-        this.mainPagePobedaInfo = new MainPagePobedaInfo(this.driver);
-        this.mainPagePobedaTiketSearch = new MainPagePobedaTiketSearch(this.driver);
-        this.mainPagePobedaTicketBooking = new MainPagePobedaTicketBooking(this.driver);
-        this.tiketBookingPagePobeda = new TiketBookingPagePobeda(this.driver);
-    }
-
-    @After
-    public void after() {
-        driver.quit();
+        System.setProperty("selenide.browser", "Chrome");
+        Selenide.open("https://www.pobeda.aero/");
+        this.mainPagePobeda = new MainPagePobeda();
+        this.mainPagePobedaInfo = new MainPagePobedaInfo();
+        this.mainPagePobedaTiketSearch = new MainPagePobedaTiketSearch();
+        this.mainPagePobedaTicketBooking = new MainPagePobedaTicketBooking();
+        this.tiketBookingPagePobeda = new TiketBookingPagePobeda();
     }
 
 
     @Test
+    @Order(1)
     public void test1() {
-        Assert.assertEquals(mainPagePobeda.getTitleText(), "Авиакомпания «Победа» - купить авиабилеты онлайн, дешёвые билеты на самолёт, прямые и трансферные рейсы с пересадками");
-        Assert.assertTrue(mainPagePobeda.getLogotypeImg().isDisplayed());
-
-        WebElement flightPreparationElement = mainPagePobedaInfo.getFlightPreparationElement();
-        Assert.assertTrue(flightPreparationElement.isDisplayed());
-        Assert.assertEquals(flightPreparationElement.getText(), "Подготовка к полёту");
-
-        WebElement helpfulInformationElement = mainPagePobedaInfo.getHelpfulInformationElement();
-        Assert.assertTrue(helpfulInformationElement.isDisplayed());
-        Assert.assertEquals(helpfulInformationElement.getText(), "Полезная информация");
-
-        WebElement informationAboutCompanyElement = mainPagePobedaInfo.getInformationAboutCompanyElement();
-        Assert.assertTrue(informationAboutCompanyElement.isDisplayed());
-        Assert.assertEquals(informationAboutCompanyElement.getText(), "О компании");
+        Assert.assertEquals(title(), "Авиакомпания «Победа» - купить авиабилеты онлайн, дешёвые билеты на самолёт, прямые и трансферные рейсы с пересадками");
+        mainPagePobeda.getLogotypeImg().shouldBe(visible);
+        checkWithTextElement(mainPagePobedaInfo.getFlightPreparationElement(), "Подготовка к полёту");
+        checkWithTextElement(mainPagePobedaInfo.getHelpfulInformationElement(), "Полезная информация");
+        checkWithTextElement(mainPagePobedaInfo.getInformationAboutCompanyElement(), "О компании");
     }
 
     @Test
+    @Order(2)
     public void test2() {
-        Assert.assertTrue(mainPagePobedaTiketSearch.getCityFromElement().isDisplayed());
-        Assert.assertTrue(mainPagePobedaTiketSearch.getCityWhereElement().isDisplayed());
-        Assert.assertTrue(mainPagePobedaTiketSearch.getDateOfDepartureThereElement().isDisplayed());
-        Assert.assertTrue(mainPagePobedaTiketSearch.getReturnFlightDateElement().isDisplayed());
+        SelenideElement cityFromElement = mainPagePobedaTiketSearch.getCityFromElement();
+
+        cityFromElement.shouldBe(visible, Duration.ofSeconds(30));
+        cityFromElement.scrollIntoView(true);
+        checkInputElement(cityFromElement, "Откуда");
+        checkInputElement(mainPagePobedaTiketSearch.getCityWhereElement(), "Куда");
+
+        mainPagePobedaTiketSearch.getDateOfDepartureThereElement().scrollIntoView(true);
+        checkInputElement(mainPagePobedaTiketSearch.getDateOfDepartureThereInputElement(), "Туда");
+        checkInputElement(mainPagePobedaTiketSearch.getReturnFlightDateInputElement(), "Обратно");
     }
+
+
     @Test
+    @Order(3)
     public void test3() {
-        mainPagePobedaTiketSearch.setSiteFromAndWhere("Москва","Санкт-Петербург");
-        Assert.assertEquals(mainPagePobedaTiketSearch.getDateOfDepartureThereElement().getAttribute("data-errored"), "true");
+        mainPagePobedaTiketSearch.setSiteFromAndWhere("Москва", "Санкт-Петербург");
+        mainPagePobedaTiketSearch.getDateOfDepartureThereElement().shouldHave(attribute("data-errored", "true"));
     }
 
     @Test
+    @Order(4)
     public void test4() {
-        WebElement ticketBookingButtonElement = mainPagePobedaTicketBooking.getTicketBookingButtonElement();
-        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", ticketBookingButtonElement);
+        SelenideElement ticketBookingButtonElement = mainPagePobedaTicketBooking.getTicketBookingButtonElement();
+        ticketBookingButtonElement.scrollIntoView(true);
+        ticketBookingButtonElement.shouldBe(visible, Duration.ofSeconds(10));
         ticketBookingButtonElement.click();
 
-        WebElement clientLastNameElement = mainPagePobedaTicketBooking.getClientLastNameElement();
-        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", clientLastNameElement);
-        Assert.assertTrue(clientLastNameElement.isDisplayed());
-        Assert.assertEquals(clientLastNameElement.getAttribute("placeholder"),"Фамилия клиента");
+        SelenideElement clientLastNameElement = mainPagePobedaTicketBooking.getClientLastNameElement();
+        clientLastNameElement.scrollIntoView(true);
+        checkInputElement(clientLastNameElement, "Фамилия клиента");
 
-        WebElement numberTicketElement = mainPagePobedaTicketBooking.getNumberTicketElement();
-        Assert.assertTrue(numberTicketElement.isDisplayed());
-        Assert.assertEquals(numberTicketElement.getAttribute("placeholder"),"Номер бронирования или билета");
+        SelenideElement numberTicketElement = mainPagePobedaTicketBooking.getNumberTicketElement();
+        numberTicketElement.scrollIntoView(true);
+        checkInputElement(numberTicketElement, "Номер бронирования или билета");
 
-        WebElement searchTicketBookingButtonElement = mainPagePobedaTicketBooking.getSearchTicketBookingButtonElement();
-        Assert.assertTrue(searchTicketBookingButtonElement.isDisplayed());
-        Assert.assertEquals(searchTicketBookingButtonElement.getText(),"ПОИСК");
+        SelenideElement searchTicketBookingButtonElement = mainPagePobedaTicketBooking.getSearchTicketBookingButtonElement();
+        searchTicketBookingButtonElement.scrollIntoView(true);
+        searchTicketBookingButtonElement.shouldBe(visible).shouldHave(exactText("ПОИСК"));
     }
+
     @Test
-
+    @Order(5)
+    @SneakyThrows
     public void test5() {
-        String originalWindow = driver.getWindowHandle();
-        mainPagePobedaTicketBooking.setLastNameAndNumberTicket("Qwerty","123456");
+        mainPagePobedaTicketBooking.setLastNameAndNumberTicket("Qwerty", "123456");
+        switchTo().window(1);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        wait.until(numberOfWindowsToBe(2));
-        for (String windowHandle : driver.getWindowHandles()) {
-            if(!originalWindow.contentEquals(windowHandle)) {
-                driver.switchTo().window(windowHandle);
-                break;
-            }
+        SelenideElement iNotRobotJSButton = tiketBookingPagePobeda.getINotRobotJSButton();
+        if (iNotRobotJSButton.exists()) {
+            iNotRobotJSButton.shouldBe(clickable, Duration.ofSeconds(10));
+            iNotRobotJSButton.click();
         }
-        tiketBookingPagePobeda.bypassСaptcha();
-        Assert.assertEquals(tiketBookingPagePobeda.getErrorMessageElement().getText(), "Заказ с указанными параметрами не найден");
-        driver.switchTo().window(originalWindow);
+
+        SelenideElement errorMessageElement = tiketBookingPagePobeda.getErrorMessageElement();
+        errorMessageElement.shouldBe(visible, Duration.ofMinutes(2));
+        Assert.assertEquals(errorMessageElement.getText(), "Заказ с указанными параметрами не найден");
+        switchTo().window(0);
     }
 }

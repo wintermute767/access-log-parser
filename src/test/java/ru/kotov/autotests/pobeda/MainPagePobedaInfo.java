@@ -1,5 +1,6 @@
 package ru.kotov.autotests.pobeda;
 
+import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -11,44 +12,30 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.actions;
+
 public class MainPagePobedaInfo {
-
-    private WebDriver webDriver;
-
     @Getter
-    @FindBy(css = "#__next > div.dp-lw1vya-root > header > div.dp-rpeswh-root > div > div > div.dp-4d364c-root-root > div.dp-12p2oi2-root > a:nth-child(1)")
-    private WebElement informationElement;
-    @FindBy(css = "#__next > div.dp-lw1vya-root > header > div.dp-rpeswh-root > div > div > div.dp-n2y4xa-root > div > div > div:nth-child(1) > a")
-    private WebElement flightPreparationElement;
-    @FindBy(css = "#__next > div.dp-lw1vya-root > header > div.dp-rpeswh-root > div > div > div.dp-n2y4xa-root > div > div > div:nth-child(2) > a")
-    private WebElement helpfulInformationElement;
-    @FindBy(css = "#__next > div.dp-lw1vya-root > header > div.dp-rpeswh-root > div > div > div.dp-n2y4xa-root > div > div > div:nth-child(3) > a")
-    private WebElement informationAboutCompanyElement;
+    private SelenideElement informationElement = $("#__next > div.dp-lw1vya-root > header > div.dp-rpeswh-root > div > div > div.dp-4d364c-root-root > div.dp-12p2oi2-root > a:nth-child(1)");
+    private SelenideElement flightPreparationElement = $("#__next > div.dp-lw1vya-root > header > div.dp-rpeswh-root > div > div > div.dp-n2y4xa-root > div > div > div:nth-child(1) > a");
+    private SelenideElement helpfulInformationElement = $("#__next > div.dp-lw1vya-root > header > div.dp-rpeswh-root > div > div > div.dp-n2y4xa-root > div > div > div:nth-child(2) > a");
+    private SelenideElement informationAboutCompanyElement = $("#__next > div.dp-lw1vya-root > header > div.dp-rpeswh-root > div > div > div.dp-n2y4xa-root > div > div > div:nth-child(3) > a");
 
-    public MainPagePobedaInfo(WebDriver webDriver) {
-        this.webDriver = webDriver;
-        this.webDriver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-        this.webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        PageFactory.initElements(this.webDriver, this);
-    }
-    public WebElement getFlightPreparationElement() {
-        Actions action = new Actions(this.webDriver);
-        action.moveToElement(getInformationElement());
-        action.perform();
+
+
+    public SelenideElement getFlightPreparationElement() {
+        actions().moveToElement(informationElement).perform();
         return flightPreparationElement;
     }
 
-    public WebElement getHelpfulInformationElement() {
-        Actions action = new Actions(this.webDriver);
-        action.moveToElement(getInformationElement());
-        action.perform();
+    public SelenideElement getHelpfulInformationElement() {
+        actions().moveToElement(informationElement).perform();
         return helpfulInformationElement;
     }
 
-    public WebElement getInformationAboutCompanyElement() {
-        Actions action = new Actions(this.webDriver);
-        action.moveToElement(getInformationElement());
-        action.perform();
+    public SelenideElement getInformationAboutCompanyElement() {
+        actions().moveToElement(informationElement).perform();
         return informationAboutCompanyElement;
     }
 }
