@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.SetValueOptions;
 import com.codeborne.selenide.commands.Clear;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.openqa.selenium.Keys;
@@ -31,7 +32,7 @@ public class MainPagePobedaTiketSearch {
     private SelenideElement firstElementInSearchCityFrom = $("#__next > div.dp-lw1vya-root > main > div > div > div.dp-1xty3kd-root-container > div > div:nth-child(3) > div:nth-child(3) > form > div > div.dp-1hfe4jj-root > div > div.dp-2iaxa-root > div > div:nth-child(1) > div.dp-f9qwpd-root-root > div > div.dp-9288i0-wrapper > div.dp-1tlnfet-mask > div > div > div > div > div > button:nth-child(1) > div > div");
     @Getter
     private SelenideElement firstElementInSearchCityWhere = $("#__next > div.dp-lw1vya-root > main > div > div > div.dp-1xty3kd-root-container > div > div:nth-child(3) > div:nth-child(3) > form > div > div.dp-1hfe4jj-root > div > div.dp-2iaxa-root > div > div:nth-child(4) > div.dp-f9qwpd-root-root > div > div.dp-9288i0-wrapper > div.dp-1tlnfet-mask > div > div > div > div > div > button > div > div");
-    @SneakyThrows
+    @Step("Задание в блоке поиска билета города откуда: {cityFrom}, и куда: {cityWhere}")
     public void setSiteFromAndWhere(String cityFrom, String cityWhere) {
         cityFromElement.shouldBe(visible,Duration.ofSeconds(10));
         cityFromElement.scrollIntoView(true);
